@@ -13,7 +13,7 @@ class Admin extends Utilisateur
         $pdo = $this->connect();
         try {
 
-            $sql_users = "SELECT ut.*, eg.* FROM utilisateurs ut LEFT JOIN enseignants eg ON ut.id_user = eg.id_user  ";
+            $sql_users = "SELECT ut.*, eg.estValide FROM utilisateurs ut LEFT JOIN enseignants eg ON ut.id_user = eg.id_user  ";
             $stmt_users = $pdo->prepare($sql_users);
             $stmt_users->execute();
 

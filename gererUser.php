@@ -1,8 +1,10 @@
 <?php
 
 require_once "classes/admin.Class.php";
+require_once "classes/utilisateur.Class.php";
 
 $admin = new Admin();
+$userr = new Utilisateur();
 
 $allUsers = $admin->getAllUsers();
 
@@ -11,8 +13,15 @@ if (isset($_POST['cptIsValide'])) {
     echo $isVld;
 }
 
+if (isset($_POST['btn_delete_user'])) {
+    $userr->deleteUser($_POST['btn_delete_user']);
+    // echo "<script>alert(" . $_POST['btn_delete_user'] . ")</script>";
+}
 
-
+// update status users : 
+if (isset($_POST['status_update'])) {
+    $rsltUpdateStatus = $userr->updateStatus($_POST['id_utilisateur'], $_POST['status_update']);
+}
 
 
 
@@ -45,12 +54,12 @@ if (isset($_POST['cptIsValide'])) {
 
     <!-- ********************************************************************************************************************************************************************** -->
 
-<section class="p-6 ">
-    <div class="flex gap-4">
-        <img src="images/icons/group.png" alt="" class="h-16 w-16">
-        <p class="text-5xl font-bold ">Les utilisateurs</p>
-    </div>
-</section>
+    <section class="p-6 ">
+        <div class="flex gap-4">
+            <img src="images/icons/group.png" alt="" class="h-16 w-16">
+            <p class="text-5xl font-bold ">Les utilisateurs</p>
+        </div>
+    </section>
     <section class="w-full min-h-screen p-6 ">
         <div class="font-[sans-serif] overflow-x-auto">
             <table class="min-w-full">
@@ -95,28 +104,51 @@ if (isset($_POST['cptIsValide'])) {
                             <td class="p-4">
                                 <?php if ($user['role'] === 'Etudiant' || $user['role'] === 'Admin'): ?>
                                     <!-- <form action="" method="post"> -->
-                                        <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] opacity-50 rounded-md text-sm ">invalider
-                                    <!-- </form> -->
-                                <?php else: ?>
+                                    <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] opacity-50 rounded-md text-sm ">invalider
+                                        <!-- </form> -->
+                                    <?php else: ?>
 
-                                    <?php if ($user['estValide'] === 1): ?>
-                                        <form action="" method="post">
-                                            <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] rounded-md text-sm ">invalider
-                                        </form>
-                                    <?php elseif ($user['estValide'] === 0): ?>
-                                        <form action="" method="post">
-                                            <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-gray-300 rounded-md text-sm ">valider
-                                        </form>
+                                        <?php if ($user['estValide'] === 1): ?>
+                                            <form action="" method="post">
+                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] rounded-md text-sm ">invalider
+                                            </form>
+                                        <?php elseif ($user['estValide'] === 0): ?>
+                                            <form action="" method="post">
+                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-gray-300 rounded-md text-sm ">valider
+                                            </form>
+                                        <?php endif; ?>
+
                                     <?php endif; ?>
-
-                                <?php endif; ?>
                             </td>
                             <td class="p-4 text-sm text-gray-800">
-                                <span
-                                    class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs"><?php echo $user['status']; ?></span>
+                                <?php if ($user['status'] === 'Activer'): ?>
+                                    <button
+                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
+                                        <?php if ($user['role'] === 'Admin') {
+                                            echo 'disabled';
+                                        } ?>>
+                                        <?php echo $user['status']; ?>
+                                    </button>
+                                <?php elseif ($user['status'] === 'Supprimer'): ?>
+                                    <button
+                                        class="w-[68px] block text-center py-1 border border-red-500 text-red-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
+                                        <?php if ($user['role'] === 'Admin') {
+                                            echo 'disabled';
+                                        } ?>>
+                                        <?php echo $user['status']; ?>
+                                    </button>
+                                <?php elseif ($user['status'] === 'Suspendu'): ?>
+                                    <button
+                                        class="w-[68px] block text-center py-1 border border-yellow-500 text-yellow-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
+                                        <?php if ($user['role'] === 'Admin') {
+                                            echo 'disabled';
+                                        } ?>>
+                                        <?php echo $user['status']; ?>
+                                    </button>
+                                <?php endif; ?>
                             </td>
                             <td class="p-4">
-                                <button class="mr-4" title="Edit">
+                                <!-- <button class="mr-4" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-blue-500 hover:fill-blue-700"
                                         viewBox="0 0 348.882 348.882">
                                         <path
@@ -126,16 +158,21 @@ if (isset($_POST['cptIsValide'])) {
                                             d="M303.85 138.388c-8.284 0-15 6.716-15 15v127.347c0 21.034-17.113 38.147-38.147 38.147H68.904c-21.035 0-38.147-17.113-38.147-38.147V100.413c0-21.034 17.113-38.147 38.147-38.147h131.587c8.284 0 15-6.716 15-15s-6.716-15-15-15H68.904C31.327 32.266.757 62.837.757 100.413v180.321c0 37.576 30.571 68.147 68.147 68.147h181.798c37.576 0 68.147-30.571 68.147-68.147V153.388c.001-8.284-6.715-15-14.999-15z"
                                             data-original="#000000" />
                                     </svg>
-                                </button>
-                                <button title="Delete">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
-                                        <path
-                                            d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                            data-original="#000000" />
-                                        <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                            data-original="#000000" />
-                                    </svg>
-                                </button>
+                                </button> -->
+                                <form action="" method="post">
+                                    <button class="mr-4" title="Delete" name="btn_delete_user" value="<?= $user['id_user']; ?>"
+                                        <?php if ($user['role'] === 'Admin') {
+                                            echo 'disabled';
+                                        } ?>>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
+                                            <path
+                                                d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                                                data-original="#000000" />
+                                            <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                                                data-original="#000000" />
+                                        </svg>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
@@ -145,6 +182,43 @@ if (isset($_POST['cptIsValide'])) {
             </table>
         </div>
     </section>
+    <!-- ********************************************************************************************************************************************************************** -->
+
+    <!-- ********************************************************************************************************************************************************************** -->
+    <!-- modification de status           ************************************************************************ -->
+
+    <div id="statusModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Modifier le status :</h2>
+
+            <form method="POST">
+                <input type="hidden" id="id_utilisateur" name="id_utilisateur" value="">
+
+                <div class="mb-4">
+                    <label for="status" class="block text-sm font-medium text-gray-600 mb-1">
+                        Nouveau status
+                    </label>
+                    <select id="status" name="status_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
+                        <option value="Suspendu">Suspendu</option>
+                        <option value="Supprimer">Supprimer</option>
+                        <option value="Activer">Activer</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" onclick="closeModal()">
+                        Annuler
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ********************************************************************************************************************************************************************** -->
+
+
 
 
 
@@ -153,6 +227,19 @@ if (isset($_POST['cptIsValide'])) {
     <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
 
+    <script>
+        // for status
+        function editStatus(id, newStatus) {
+            document.getElementById("id_utilisateur").value = id;
+            document.getElementById("status").value = newStatus;
+
+            document.getElementById("statusModal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("statusModal").classList.add("hidden");
+        }
+    </script>
 
 </body>
 <!-- Scripts JavaScript -->

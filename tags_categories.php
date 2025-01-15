@@ -3,46 +3,47 @@
 require_once "classes/tag.Class.php";
 require_once "classes/categorie.Class.php";
 
-$tag = new Tag();
-$categorie = new Categorie();
 
+// getstion de tag ++++++++++++++++++++++++++++++++++++++++++++++++
+$tag = new Tag();
 $tag_result = '';
-$categorie_result = '';
+
+$tags = $tag->getAllTags();
 
 if (isset($_POST['btn_addTag'])) {
     $tag_result = $tag->addTag($_POST['input_addTag']);
-}
-
-if (isset($_POST['btn_addCategorie'])) {
-    $categorie_result = $categorie->addcategorie($_POST['input_addCategorie']);
-}
-
-$tags = $tag->getAllTags();
-$categories = $categorie->getAllCategorie();
-
-if (isset($_POST['btn_deleteCategorie'])) {
-    $categorie->deleteCategorie($_POST['btn_deleteCategorie']);
-}
-
-if (isset($_POST['btn_deleteTag'])) {
-    $tag->deleteTag($_POST['btn_deleteTag']);
 }
 
 if (isset($_POST['btn_update_tag'])) {
     $tag->updateTag($_POST['id_tag'], $_POST['update_tag']);
 }
 
+if (isset($_POST['btn_deleteTag'])) {
+    $tag->deleteTag($_POST['btn_deleteTag']);
+}
+
+// getstion de categorie ++++++++++++++++++++++++++++++++++++++++++++++++
+
+$categorie = new Categorie();
+$categorie_result = '';
+
+$categories = $categorie->getAllCategorie();
+
+if (isset($_POST['btn_addCategorie'])) {
+    $categorie_result = $categorie->addcategorie($_POST['input_addCategorie']);
+}
+
 if (isset($_POST['btn_update_categorie'])) {
     $categorie->updateCategorie($_POST['id_categorie'], $_POST['update_categorie']);
 }
 
-
-
-
-
-
+if (isset($_POST['btn_deleteCategorie'])) {
+    $categorie->deleteCategorie($_POST['btn_deleteCategorie']);
+}
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 

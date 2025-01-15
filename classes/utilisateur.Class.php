@@ -107,22 +107,20 @@ class Utilisateur extends DataBase
                         header("Location: gererUser.php");
                         break;
                     case "Enseignant": {
-                            try{
+                            try {
                                 $sql_check_valid = "SELECT estValide FROM enseignants WHERE id_user = :id_user";
                                 $stmt_check_valide = $pdo->prepare($sql_check_valid);
                                 $stmt_check_valide->execute([':id_user' => $user['id_user']]);
                                 $rslt = $stmt_check_valide->fetch(PDO::FETCH_ASSOC);
 
-                                if($rslt['estValide'] === 1){
+                                if ($rslt['estValide'] === 1) {
                                     header("Location: dashboard_enseignant.php");
                                     exit;
-                                }
-                                else{
+                                } else {
                                     header("Location: pas_valide.php");
                                     exit;
-
                                 }
-                            }catch(Exception $e){
+                            } catch (Exception $e) {
                                 return "Erreur : Lors la connexion comme user " . $e->getMessage();
                             }
                             break;
@@ -171,6 +169,41 @@ class Utilisateur extends DataBase
         } catch (Exception $e) {
             echo "Erreur : getRole d'un user !!!" . $e->getMessage();
             return null;
+        }
+    }
+
+    // fonction deleteUser ***************************************************************************************************************************************************
+    public function deleteUser($id_user)
+    {
+        try {
+            $pdo = $this->connect();
+
+            $sql = "DELETE FROM utilisateurs WHERE id_user = :id_user";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([":id_user" => $id_user]);
+            header("Location: gererUser.php");
+            exit;
+        } catch (Exception $e) {
+            return "Erreur : getRole d'un user !!!" . $e->getMessage();
+        }
+    }
+
+    // fonction updateStatus ***************************************************************************************************************************************************
+    public function updateStatus($id_user, $newStatus)
+    {
+        try {
+            $pdo = $this->connect();
+
+            $sql = "UPDATE utilisateurs SET status = :newStatus WHERE id_user = :id_user";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':id_user' => $id_user,
+                ':newStatus' => $newStatus
+            ]);
+            header("Location: gererUser.php");
+            exit;
+        } catch (Exception $e) {
+            return "Erreur : Lors le changement de status d'un user !!!" . $e->getMessage();
         }
     }
 }
