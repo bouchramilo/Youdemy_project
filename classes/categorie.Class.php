@@ -29,15 +29,34 @@ class Categorie extends DataBase
     {
         try {
             $pdo = $this->connect();
-            $sql_add = "DELETE FROM categorie WHERE id_categorie = :id_categorie";
-            $stmt_add = $pdo->prepare($sql_add);
-            $stmt_add->execute([':id_categorie' => $id_categorie]);
+            $sql_delete = "DELETE FROM categorie WHERE id_categorie = :id_categorie";
+            $stmt_delete = $pdo->prepare($sql_delete);
+            $stmt_delete->execute([':id_categorie' => $id_categorie]);
             header("Location: tags_categories.php");
             return;
         } catch (Exception $e) {
             return "Erreur : Lors de la suupression de categorie !!! " . $e->getMessage();
         }
     }
+
+    // fonction updateCategorie() ***************************************************************************************************************************************************
+    public function updateCategorie($id_categorie, $titreCategorie)
+    {
+        try {
+            $pdo = $this->connect();
+            $sql_update = "UPDATE categorie SET titre_categorie = :titreCategorie WHERE id_categorie = :id_categorie";
+            $stmt_update = $pdo->prepare($sql_update);
+            $stmt_update->execute([
+                ':titreCategorie' => $titreCategorie,
+                ':id_categorie' => $id_categorie
+            ]);
+            header("Location: tags_categories.php");
+            return;
+        } catch (Exception $e) {
+            return "Erreur : Lors de la modification de categorie !!! " . $e->getMessage();
+        }
+    }
+
 
     // fonction getAllCategorie() ***************************************************************************************************************************************************
     public function getAllCategorie()

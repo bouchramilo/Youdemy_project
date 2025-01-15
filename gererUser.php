@@ -53,23 +53,23 @@ if (isset($_POST['cptIsValide'])) {
 </section>
     <section class="w-full min-h-screen p-6 ">
         <div class="font-[sans-serif] overflow-x-auto">
-            <table class="min-w-full bg-white">
-                <thead class="whitespace-nowrap">
+            <table class="min-w-full">
+                <thead class="bg-[#386641] text-white whitespace-nowrap">
                     <tr>
 
-                        <th class="p-4 text-left text-sm font-semibold text-black">
+                        <th class="p-4 text-left text-sm font-semibold">
                             Name
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold text-black">
+                        <th class="p-4 text-left text-sm font-semibold">
                             Role
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold text-black">
+                        <th class="p-4 text-left text-sm font-semibold">
                             valide
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold text-black">
+                        <th class="p-4 text-left text-sm font-semibold">
                             Status
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold text-black">
+                        <th class="p-4 text-left text-sm font-semibold">
                             Action
                         </th>
                     </tr>
@@ -78,7 +78,7 @@ if (isset($_POST['cptIsValide'])) {
                 <tbody class="whitespace-nowrap">
 
                     <?php foreach ($allUsers as $user): ?>
-                        <tr class="odd:bg-blue-50">
+                        <tr class="border-b-2 border-[#386641] bg-[#daeadd]">
 
                             <td class="p-4 text-sm">
                                 <div class="flex items-center cursor-pointer w-max">

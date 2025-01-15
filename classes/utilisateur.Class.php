@@ -104,7 +104,7 @@ class Utilisateur extends DataBase
                 $_SESSION['id_utilisateur'] = $user['id_user'];
                 switch ($user['role']) {
                     case "Admin":
-                        header("Location: dashboard_admin.php");
+                        header("Location: gererUser.php");
                         break;
                     case "Enseignant": {
                             try{

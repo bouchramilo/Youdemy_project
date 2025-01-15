@@ -41,24 +41,11 @@ class Admin extends Utilisateur
             $stmt_valide = $pdo->prepare($sql_valide);
             $stmt_valide->execute([':id_user' => $id_user, ':isValide' => $isValide]);
 
-            header("Location: dashboard_admin.php");
+            header("Location: gererUser.php");
 
             return true;
         } catch (Exception $e) {
             return "Erreur : Lors de la validation de compte d'un enseignant !!!" . $e->getMessage();
-        }
-    }
-
-    // fonction addTag() ***************************************************************************************************************************************************
-    public function addTag($nom_tag){
-        try{
-            $pdo = $this->connect();
-            $sql_add = "INSERT INTO tags (nom_tag) VALUES (:nom_tag)";
-            $stmt_add = $pdo->prepare($sql_add);
-            $stmt_add->execute([':nom_tag' => $nom_tag]);
-
-        }catch(Exception $e){
-            return "Erreur : Lors de l'ajout de Tag !!! " . $e->getMessage();
         }
     }
 }

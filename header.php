@@ -27,8 +27,8 @@ if(isset($_POST['deconnecter'])){
             <ul class="hidden md:flex space-x-4">
                 <li><a href="index.php" class="hover:text-[#f48c06]">Accueil</a></li>
                 <?php if ($role === "Admin") : ?>
-                    <li><a href="#" class="hover:text-[#f48c06]">Utilisateurs</a></li>
-                    <li><a href="#" class="hover:text-[#f48c06]">Statistique</a></li>
+                    <li><a href="gererUser.php" class="hover:text-[#f48c06]">Utilisateurs</a></li>
+                    <li><a href="adminStatistique.php" class="hover:text-[#f48c06]">Statistique</a></li>
                     <li><a href="tags_categories.php" class="hover:text-[#f48c06]">Tags/Catégories</a></li>
                 <?php elseif ($role === "Etudiant") : ?>
                     <li><a href="#" class="hover:text-[#f48c06]">Mes Cours</a></li>
