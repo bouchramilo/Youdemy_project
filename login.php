@@ -9,21 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $login_user = $utilisateur->login($_POST['email'], $_POST['password']);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>

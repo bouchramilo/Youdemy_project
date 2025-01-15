@@ -8,16 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $insert_user = $utilisateur->signUp($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['role'], $_POST['photo'], $_POST['password1'], $_POST['password2']);
 }
 
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
 
-
-
+    
     <div class="flex items-center justify-center min-h-screen w-full bg-[url('images/image_1.jpg')] bg-cover">
         <div class=" lg:w-1/3 max-sm:w-full max-md:w-full md:w-2/3 bg-white bg-opacity-65 shadow-md rounded-lg p-8">
             <h2 class="text-2xl font-bold text-center text-[#0c0d08] mb-6">Se connecter</h2>
@@ -81,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <select id="role" name="role" required
                         class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]">
                         <!-- <option value=""></option> -->
-                        <option value="etudiant">Étudiant</option>
-                        <option value="enseignant">Enseignant</option>
+                        <option value="Etudiant">Étudiant</option>
+                        <option value="Enseignant">Enseignant</option>
                     </select>
                 </div>
 

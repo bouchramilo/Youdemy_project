@@ -3,12 +3,19 @@
 CALL afficherTables();
 
 -- pour supprimer les tabels
--- CALL supprimerTables();
+CALL supprimerTables();
 
 
 -- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- Les procedures et les fonctions : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    SELECT * FROM utilisateurs;
+    SELECT * FROM enseignants;
+    SELECT * FROM categorie;
+    SELECT * FROM cours;
+    SELECT * FROM inscription_cours;
+    SELECT * FROM tags;
+    SELECT * FROM cours_tags;
 -- Procedures : ==============================================================================================================================================
 -- procedure pour afficher toutes les tables : 
 
