@@ -24,14 +24,14 @@ CREATE TABLE utilisateurs (
     prenom VARCHAR(100),
     photo VARCHAR(255) NOT NULL,
     role ENUM('Admin', 'Etudiant', 'Enseignant') NOT NULL,
-    status ENUM('Suspendu', 'Supprimer', 'Activer') DEFAULT 'Activer'
+    status ENUM('Suspendu', 'Activer') DEFAULT 'Activer'
 );
 
 
 -- Table enseignants :
 CREATE TABLE enseignants (
-    id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT NOT NULL UNIQUE,
+    -- id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL PRIMARY KEY,
     estValide BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (id_user) REFERENCES utilisateurs(id_user) ON DELETE CASCADE
 );
@@ -57,7 +57,7 @@ CREATE TABLE cours (
     -- photo BLOB DEFAULT NULL,
     -- mime VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie) ON DELETE SET NULL,
-    FOREIGN KEY (id_enseignant) REFERENCES enseignants(id_enseignant) ON DELETE CASCADE
+    FOREIGN KEY (id_enseignant) REFERENCES enseignants(id_user) ON DELETE CASCADE
 );
 
 

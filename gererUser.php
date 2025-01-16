@@ -129,14 +129,7 @@ if (isset($_POST['status_update'])) {
                                         } ?>>
                                         <?php echo $user['status']; ?>
                                     </button>
-                                <?php elseif ($user['status'] === 'Supprimer'): ?>
-                                    <button
-                                        class="w-[68px] block text-center py-1 border border-red-500 text-red-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
-                                        <?php if ($user['role'] === 'Admin') {
-                                            echo 'disabled';
-                                        } ?>>
-                                        <?php echo $user['status']; ?>
-                                    </button>
+                                
                                 <?php elseif ($user['status'] === 'Suspendu'): ?>
                                     <button
                                         class="w-[68px] block text-center py-1 border border-yellow-500 text-yellow-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
@@ -200,7 +193,7 @@ if (isset($_POST['status_update'])) {
                     </label>
                     <select id="status" name="status_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
                         <option value="Suspendu">Suspendu</option>
-                        <option value="Supprimer">Supprimer</option>
+                        <!-- <option value="Supprimer">Supprimer</option> -->
                         <option value="Activer">Activer</option>
                     </select>
                 </div>

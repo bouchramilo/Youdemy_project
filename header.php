@@ -1,7 +1,7 @@
 <?php
 
 require_once "classes/utilisateur.Class.php";
-session_start();
+// session_start();
 $userr = new Utilisateur();
 $role = $userr->getRole();
 

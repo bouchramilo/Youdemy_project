@@ -71,7 +71,7 @@
                             <p class="text-gray-600 mt-2">Apprenez les bases de la programmation avec des exemples
                                 simples.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
                     <!-- Card 2 -->
@@ -80,7 +80,7 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg text-[#386641]">Data Science pour débutants</h4>
                             <p class="text-gray-600 mt-2">Un guide pour comprendre les bases de la Data Science.</p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
                     <!-- Card 3 -->
@@ -90,7 +90,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
 
@@ -110,7 +110,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
 
@@ -140,7 +140,7 @@
                             <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
                             <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
                             </p>
-                            <a href="#" class="text-[#faa307 hover:underline mt-4 block">Voir le cours</a>
+                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
                         </div>
                     </div>
                 </div>
