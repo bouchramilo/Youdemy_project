@@ -34,8 +34,8 @@ if(isset($_POST['deconnecter'])){
                     <li><a href="#" class="hover:text-[#f48c06]">Mes Cours</a></li>
                     <!-- <li><a href="#" class="hover:text-[#f48c06]"></a></li> -->
                 <?php elseif ($role === "Enseignant") : ?>
-                    <li><a href="dashboard_enseignant.php" class="hover:text-[#f48c06]">Gestion des Cours</a></li>
-                    <li><a href="#" class="hover:text-[#f48c06]">Mes Cours</a></li>
+                    <li><a href="dashboard_enseignant.php" class="hover:text-[#f48c06]">Mes Cours</a></li>
+                    <li><a href="inscription_cours.php" class="hover:text-[#f48c06]">Inscriptions</a></li>
                     <li><a href="#" class="hover:text-[#f48c06]">Statistique</a></li>
                 <?php endif; ?>
             </ul>

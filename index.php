@@ -1,3 +1,20 @@
+<?php
+
+require_once "classes/cours.Class.php";
+
+$course = new Cours();
+$mesCours = $course->getAllCours();
+
+
+
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,13 +24,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <title>Youdemy - Accueil</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Sawarabi%20Mincho:700|Sawarabi%20Mincho:400"> -->
-    <!-- <style>
-        body {
-            font-family: 'Sawarabi Mincho';
-            font-weight: 400;
-        }
-    </style> -->
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -58,94 +69,77 @@
         <!-- ************************************************************************************************************************************************************** -->
 
         <!-- Section: Cours Populaires -->
-        <section id="catalogue" class="py-16">
-            <div class="container mx-auto px-4">
-                <h3 class="text-3xl font-bold text-gray-800 text-center">Cours Populaires</h3>
-                <p class="text-center text-gray-600 mt-2">Découvrez nos cours les plus suivis.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-                    <!-- Card 1 -->
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 1" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Introduction à la programmation</h4>
-                            <p class="text-gray-600 mt-2">Apprenez les bases de la programmation avec des exemples
-                                simples.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 2" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Data Science pour débutants</h4>
-                            <p class="text-gray-600 mt-2">Un guide pour comprendre les bases de la Data Science.</p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
 
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
+        <div id="catalogue" class="bg-white font-sans">
+            <div class="max-w-6xl mx-auto p-4">
+                <div class="text-center">
+                    <h2 class="text-3xl font-extrabold text-gray-800 inline-block relative after:absolute after:w-4/6 after:h-1 after:left-0 after:right-0 after:-bottom-4 after:mx-auto after:bg-[#386641] after:rounded-lg-full">Cours Populaires</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
 
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
 
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
+                    <?php if (!empty($mesCours)): ?>
+                        <?php foreach ($mesCours as $CRS) : ?>
 
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
+                            <div class="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group">
+                                <img src="<?php echo $CRS['photo']; ?>" alt="Blog Post 1" class="w-full h-96 object-cover" />
+                                <div class="p-6 absolute bottom-0 left-0 right-0 bg-[#ffba08] opacity-90">
+                                    <span class="text-sm block text-gray-800 mb-2"><?php echo $CRS['date_de_creation']; ?> | BY <?php echo $CRS['full_name']; ?></span>
+                                    <h3 class="text-xl font-bold text-gray-800"><?php echo $CRS['titre']; ?></h3>
+                                    <div class="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
+                                        <p class="text-gray-800 text-sm"><?php echo $CRS['description']; ?>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else :  ?>
+                        <p class="text-sm text-gray-300 text-center">Aucun cours pour ce moment ... .</p>
+                    <?php endif; ?>
 
-                    <div class="bg-[#daeadd] hover:scale-105 hover:shadow-lg shadow-[#386641] shadow-md rounded-lg overflow-hidden">
-                        <img src="images/image_7.jpg" alt="Cours 3" class="w-full h-40 object-cover">
-                        <div class="p-4">
-                            <h4 class="font-bold text-lg text-[#386641]">Marketing Digital</h4>
-                            <p class="text-gray-600 mt-2">Maîtrisez les outils pour développer votre activité en ligne.
-                            </p>
-                            <a href="#" class="text-[#faa307] hover:underline mt-4 block">Voir le cours</a>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <ul class="my-10 flex space-x-5 justify-center font-[sans-serif]">
+            <li class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer w-9 h-9 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-400" viewBox="0 0 55.753 55.753">
+                    <path
+                        d="M12.745 23.915c.283-.282.59-.52.913-.727L35.266 1.581a5.4 5.4 0 0 1 7.637 7.638L24.294 27.828l18.705 18.706a5.4 5.4 0 0 1-7.636 7.637L13.658 32.464a5.367 5.367 0 0 1-.913-.727 5.367 5.367 0 0 1-1.572-3.911 5.369 5.369 0 0 1 1.572-3.911z"
+                        data-original="#000000" />
+                </svg>
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                1
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 bg-[#386641] cursor-pointer text-base font-bold text-white px-[13px] h-9 rounded-md">
+                2
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                3
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                4
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                5
+            </li>
+            <li
+                class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                6
+            </li>
+            <li class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer w-9 h-9 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-400 rotate-180" viewBox="0 0 55.753 55.753">
+                    <path
+                        d="M12.745 23.915c.283-.282.59-.52.913-.727L35.266 1.581a5.4 5.4 0 0 1 7.637 7.638L24.294 27.828l18.705 18.706a5.4 5.4 0 0 1-7.636 7.637L13.658 32.464a5.367 5.367 0 0 1-.913-.727 5.367 5.367 0 0 1-1.572-3.911 5.369 5.369 0 0 1 1.572-3.911z"
+                        data-original="#000000" />
+                </svg>
+            </li>
+        </ul>
 
 
     </section>

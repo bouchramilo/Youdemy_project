@@ -65,6 +65,29 @@ class Cours extends DataBase{
             return "Erreur : Lors de la suppression d'un cours !!! " . $e->getMessage();
         }
     }
+
+    // fonction getAllMesCours ***************************************************************************************************************************************************
+    public function getAllCours(){
+        $pdo = $this->connect();
+
+        try{
+
+            $sql_all_C = "SELECT cs.*, CONCAT(u.nom, ' ' , u.prenom) as full_name 
+                        FROM cours cs
+                        LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user 
+                        -- LIMIT 0, 3 
+                ";
+
+            $stmt_All = $pdo->prepare($sql_all_C);
+            $stmt_All->execute();
+
+            $AllCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
+            return $AllCours ;
+
+        }catch(Exception $e){
+            return "Erreur : Lors de la récupération de tous les cours !!! " . $e->getMessage();
+        }
+    }
 }
 
 

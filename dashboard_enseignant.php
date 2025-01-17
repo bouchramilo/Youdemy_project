@@ -44,7 +44,12 @@ if (isset($_POST['btn_delete_cours'])) {
     header("Location: dashboard_enseignant.php");
 }
 
-
+// delete cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+if(isset($_POST['details_cours'])){
+    $_SESSION['type_cours'] = $_POST['type_cours'] ; 
+    $_SESSION['id_cours'] = $_POST['details_cours'];
+    header("Location: E_details_cours.php");
+}
 
 ?>
 
@@ -78,12 +83,17 @@ if (isset($_POST['btn_delete_cours'])) {
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
     <?php include "header.php"; ?>
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
-    <section class="w-full h-16 px-10 pt-6 flex justify-end">
-        <form action="" method="post">
-            <button type="button"
-                class="addCours bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">Ajouter | &#10010;
-            </button>
-        </form>
+
+
+    <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center bg-gray-100 shadow-md">
+        <div class="text-4xl font-semibold text-gray-800">Mes cours </div>
+        <div class="flex max-sm:flex-col sm:flex-col md:flex-row max-sm:text-xs gap-4">
+            <form action="" method="post">
+                <button type="button"
+                    class="addCours bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">Ajouter | &#10010;
+                </button>
+            </form>
+        </div>
     </section>
     <section class="min-h-screen w-full p-6">
 
@@ -101,7 +111,8 @@ if (isset($_POST['btn_delete_cours'])) {
 
                     <div class="px-6 py-4 h-full flex flex-col justify-between">
                         <form action="" method="post">
-                            <button class="text-[#faa307] hover:underline mt-4 block text-xl font-semibold">
+                            <input type="hidden" name="type_cours" value="<?php echo $courss['type_contenu'] ?>">
+                            <button name="details_cours" value="<?php echo $courss['id_cours'] ?>" class="text-[#faa307] hover:underline mt-4 block text-xl font-semibold">
                                 <?php echo $courss['titre']; ?>
                             </button>
                         </form>
@@ -110,7 +121,7 @@ if (isset($_POST['btn_delete_cours'])) {
                         <p class=" mt-3 text-sm text-gray-500 leading-relaxed"><span class="font-bold">Date de céation : </span><?php echo $courss['date_de_creation']; ?></p>
 
                         <div class=" flex flex-row items-center justify-end w-max self-end cursor-pointer border border-gray-300 rounded-lg px-4 py-2 mt-6">
-                            <button class="updateCours mr-4" title="Edit">
+                            <!-- <button class="updateCours mr-4" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-blue-500 hover:fill-blue-700"
                                     viewBox="0 0 348.882 348.882">
                                     <path
@@ -120,7 +131,7 @@ if (isset($_POST['btn_delete_cours'])) {
                                         d="M303.85 138.388c-8.284 0-15 6.716-15 15v127.347c0 21.034-17.113 38.147-38.147 38.147H68.904c-21.035 0-38.147-17.113-38.147-38.147V100.413c0-21.034 17.113-38.147 38.147-38.147h131.587c8.284 0 15-6.716 15-15s-6.716-15-15-15H68.904C31.327 32.266.757 62.837.757 100.413v180.321c0 37.576 30.571 68.147 68.147 68.147h181.798c37.576 0 68.147-30.571 68.147-68.147V153.388c.001-8.284-6.715-15-14.999-15z"
                                         data-original="#000000" />
                                 </svg>
-                            </button>
+                            </button> -->
                             <form action="" method="post" class="w-5 mt-2">
                                 <button class="" title="Delete" name="btn_delete_cours" value="<?php echo $courss['id_cours']; ?>">
 
@@ -289,8 +300,7 @@ if (isset($_POST['btn_delete_cours'])) {
                 <div id="type-text" class="hidden">
                     <label class="text-gray-800 text-sm mb-1 block">Texte de cours</label>
                     <textarea placeholder="Entrez le Contenu Text" name="text_cours"
-                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
-                    </textarea>
+                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg"></textarea>
                 </div>
 
                 <div id="type-video" class="hidden">
@@ -338,92 +348,7 @@ if (isset($_POST['btn_delete_cours'])) {
         </div>
     </div>
 
-    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <!-- update cours model +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-    <div
-        class="coursUpdateModal hidden fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-        <div class="w-full max-w-lg bg-yellow-50 shadow-lg rounded-lg p-8 relative">
-            <div class="flex items-center">
-                <h3 class="text-[#386641] text-xl font-bold flex-1">Modifier le cours</h3>
-            </div>
-
-            <form method="post" action="" class="space-y-4 mt-8">
-                <!-- <p class="text-sm text-red-500"><?php echo $result_update_cours; ?></p> -->
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Titre de cours</label>
-                    <input type="text" placeholder="Entrez le titre de cours" name="title_cours_update"
-                        class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
-                </div>
-
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Description du cours</label>
-                    <textarea placeholder='Entrez la description de cours' name="descri_cours_update"
-                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" rows="3"></textarea>
-                </div>
-
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Type de cours</label>
-                    <select placeholder="Entrez Type de cours" id="select_type" name="type_cours_update"
-                        class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
-                        <option value="Video">Video</option>
-                        <option value="Texte">Texte</option>
-                    </select>
-                </div>
-                <!-- contenus selon  le type de contenu ------------------------------------------------------------------------------------------------------------------------------  -->
-                <div id="type-text" class="hidden">
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Texte de cours</label>
-                    <textarea placeholder="Entrez le Contenu Text" name="text_cours_update"
-                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
-                    </textarea>
-                </div>
-
-                <div id="type-video" class="hidden">
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau URI video</label>
-                    <input type="url" placeholder="Entrez le URL du Video" name="video_cours_update"
-                        class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
-                </div>
-                <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------  -->
-
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Catégorie</label>
-                    <select placeholder="Enter le Catégorie de cours" name="categorie_cours_update"
-                        class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
-                        <?php foreach ($categories as $categoriee): ?>
-                            <option value="<?= $categoriee['id_categorie'] ?>"><?= $categoriee['titre_categorie'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Tags</label>
-                    <!-- Select tags -->
-                    <select name="tags_cours_update[]" id="tags_update" multiple>
-                        <?php foreach ($tags as $taag): ?>
-                            <option value="<?= $taag['id_tag'] ?>"><?= $taag['nom_tag'] ?></option>
-                        <?php endforeach; ?>
-
-                    </select>
-                    <!-- End Select tags -->
-                </div>
-
-                <div>
-                    <label class="text-gray-800 text-sm mb-1 block">Nouveau Photo</label>
-                    <input type="url" placeholder="Entrez le URL de la photo de cours" name="photo_cours_update"
-                        class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
-                </div>
-
-                <div class="flex justify-end gap-4 !mt-8">
-                    <button type="button"
-                        class="closeU px-6 py-3 rounded-lg text-gray-800 text-sm border-none outline-none tracking-wide bg-gray-200 hover:bg-gray-300">Annuler</button>
-                    <button name="btn_update_cours"
-                        class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-[#386641] hover:bg-[#277752]">Ajouter</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
+   
 
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
     <?php include "footer.php"; ?>
