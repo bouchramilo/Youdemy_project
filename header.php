@@ -31,7 +31,7 @@ if(isset($_POST['deconnecter'])){
                     <li><a href="adminStatistique.php" class="hover:text-[#f48c06]">Statistique</a></li>
                     <li><a href="tags_categories.php" class="hover:text-[#f48c06]">Tags/Catégories</a></li>
                 <?php elseif ($role === "Etudiant") : ?>
-                    <li><a href="#" class="hover:text-[#f48c06]">Mes Cours</a></li>
+                    <li><a href="mes_cours.php" class="hover:text-[#f48c06]">Mes Cours</a></li>
                     <!-- <li><a href="#" class="hover:text-[#f48c06]"></a></li> -->
                 <?php elseif ($role === "Enseignant") : ?>
                     <li><a href="dashboard_enseignant.php" class="hover:text-[#f48c06]">Mes Cours</a></li>
@@ -69,7 +69,7 @@ if(isset($_POST['deconnecter'])){
                 <li><a href="#" class="block text-white hover:text-[#f48c06]">Statistique</a></li>
                 <li><a href="#" class="block text-white hover:text-[#f48c06]">Tags/catégories</a></li>
             <?php elseif ($role === "Etudiant") : ?>
-                <li><a href="#" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>
+                <li><a href="mes_cours.php" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>
             <?php elseif ($role === "Enseignant") : ?>
                 <li><a href="#" class="block text-white hover:text-[#f48c06]">Gestion des Cours</a></li>
                 <li><a href="#" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>

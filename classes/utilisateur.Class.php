@@ -1,6 +1,7 @@
 <?php
 
 require_once "DataBase.Class.php";
+require_once "inscription_cours.Class.php";
 
 class Utilisateur extends DataBase
 {
@@ -204,6 +205,23 @@ class Utilisateur extends DataBase
             exit;
         } catch (Exception $e) {
             return "Erreur : Lors le changement de status d'un user !!!" . $e->getMessage();
+        }
+    }
+
+    // fonction updateStatus ***************************************************************************************************************************************************
+    public function isLogin($id_cours)
+    {
+        $coursInscrire = new InscriptionCours();
+
+        if ($this->getRole() === "Etudiant") {
+            $resultat = $coursInscrire->inscrireCours($id_cours);
+            if (!$resultat) {  
+                echo "<script>alert('Échec de l'inscription. Veuillez réessayer.');</script>";
+            }
+        } elseif ($this->getRole() === "Admin" || $this->getRole() === "Enseignant") {
+            echo "<script>alert('Les administrateurs et les enseignants ne peuvent pas s\'inscrire aux cours.');</script>";
+        } else {
+            echo "<script>alert('Rôle non reconnu. Action impossible.');</script>";
         }
     }
 }

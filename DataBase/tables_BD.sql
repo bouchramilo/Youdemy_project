@@ -1,17 +1,13 @@
 -- Active: 1733819346903@@127.0.0.1@3306@youdemy_db
 
-
 -- céation de la base de données :
-CREATE DATABASE IF NOT EXISTS Youdemy_db ;
+CREATE DATABASE IF NOT EXISTS Youdemy_db;
 
 -- utiliser la base de données "Youdemy_db" :
-use Youdemy_db ;
+use Youdemy_db;
 
 -- vérifier l'éxistance des tables :
 show TABLES;
-
-
-
 
 -- la cr&ation des tables : ==============================================================================================================================================
 
@@ -23,17 +19,20 @@ CREATE TABLE utilisateurs (
     nom VARCHAR(100),
     prenom VARCHAR(100),
     photo VARCHAR(255) NOT NULL,
-    role ENUM('Admin', 'Etudiant', 'Enseignant') NOT NULL,
+    role ENUM(
+        'Admin',
+        'Etudiant',
+        'Enseignant'
+    ) NOT NULL,
     status ENUM('Suspendu', 'Activer') DEFAULT 'Activer'
 );
-
 
 -- Table enseignants :
 CREATE TABLE enseignants (
     -- id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL PRIMARY KEY,
     estValide BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (id_user) REFERENCES utilisateurs(id_user) ON DELETE CASCADE
+    FOREIGN KEY (id_user) REFERENCES utilisateurs (id_user) ON DELETE CASCADE
 );
 
 -- Table categorie :
@@ -57,19 +56,17 @@ CREATE TABLE cours (
     -- photo BLOB DEFAULT NULL,
     -- mime VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie) ON DELETE SET NULL,
-    FOREIGN KEY (id_enseignant) REFERENCES enseignants(id_user) ON DELETE CASCADE
+    FOREIGN KEY (id_enseignant) REFERENCES enseignants (id_user) ON DELETE CASCADE
 );
 
-
--- Table inscription cours : 
+-- Table inscription cours :
 CREATE TABLE inscription_cours (
-    id_inscription INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
     id_cours INT NOT NULL,
     date_inscription DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES utilisateurs(id_user) ON DELETE CASCADE,
-    FOREIGN KEY (id_cours) REFERENCES cours(id_cours) ON DELETE CASCADE,
-    UNIQUE (id_user, id_cours)
+    PRIMARY KEY (id_user, id_cours),
+    FOREIGN KEY (id_user) REFERENCES utilisateurs (id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_cours) REFERENCES cours (id_cours) ON DELETE CASCADE
 );
 
 -- Table tags :
@@ -78,16 +75,14 @@ CREATE TABLE tags (
     nom_tag VARCHAR(255) NOT NULL
 );
 
--- Table cours_tags : 
+-- Table cours_tags :
 CREATE TABLE cours_tags (
     id_cours INT NOT NULL,
     id_tag INT NOT NULL,
     PRIMARY KEY (id_cours, id_tag),
-    FOREIGN KEY (id_cours) REFERENCES cours(id_cours) ON DELETE CASCADE,
-    FOREIGN KEY (id_tag) REFERENCES tags(id_tag) ON DELETE CASCADE
+    FOREIGN KEY (id_cours) REFERENCES cours (id_cours) ON DELETE CASCADE,
+    FOREIGN KEY (id_tag) REFERENCES tags (id_tag) ON DELETE CASCADE
 );
 
-
 -- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 

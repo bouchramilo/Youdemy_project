@@ -1,12 +1,16 @@
 <?php
 
 require_once "classes/cours.Class.php";
+require_once "classes/utilisateur.Class.php";
 
 $course = new Cours();
 $mesCours = $course->getAllCours();
 
+$utlstr = new Utilisateur();
 
-
+if(isset($_POST['isLogin'])){
+    $result = $utlstr->isLogin($_POST['isLogin']);
+}
 
 
 
@@ -84,16 +88,19 @@ $mesCours = $course->getAllCours();
                             <div class="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group">
                                 <img src="<?php echo $CRS['photo']; ?>" alt="Blog Post 1" class="w-full h-96 object-cover" />
                                 <div class="p-6 absolute bottom-0 left-0 right-0 bg-[#ffba08] opacity-90">
-                                    <span class="text-sm block text-gray-800 mb-2"><?php echo $CRS['date_de_creation']; ?> | BY <?php echo $CRS['full_name']; ?></span>
-                                    <h3 class="text-xl font-bold text-gray-800"><?php echo $CRS['titre']; ?></h3>
+                                    <span class="text-sm block text-gray-800 mb-2"><?php echo $CRS['date_de_creation']; ?> | AVEC <?php echo $CRS['full_name']; ?></span>
+                                    <h3 class="text-xl font-bold text-[#386641]"><?php echo $CRS['titre']; ?></h3>
                                     <div class="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
                                         <p class="text-gray-800 text-sm"><?php echo $CRS['description']; ?>.</p>
                                     </div>
+                                    <form action="" method="post" class="w-full text-end">
+                                        <button name="isLogin" value="<?php echo $CRS['id_cours']; ?>" class="hover:underline text-[#386641]">Voir le cours</button>
+                                    </form>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else :  ?>
-                        <p class="text-sm text-gray-300 text-center">Aucun cours pour ce moment ... .</p>
+                        <p class="text-sm text-gray-300 text-center tetx-[#386641]">Aucun cours pour ce moment ... .</p>
                     <?php endif; ?>
 
                 </div>

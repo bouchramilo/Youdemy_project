@@ -5,44 +5,13 @@ require_once "classes/tag.Class.php";
 require_once "classes/categorie.Class.php";
 require_once "classes/cours_texte.Class.php";
 require_once "classes/cours_video.Class.php";
+require_once "classes/inscription_cours.Class.php";
+
+$inscrireCours = new InscriptionCours();
+
+$mesInscriCours = $inscrireCours->AllInscriptionMesCours();
 
 
-// affichage de tag , affichage de categorie ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-$tag = new Tag();
-$categorie = new Categorie();
-$tags = $tag->getAllTags();
-$categories = $categorie->getAllCategorie();
-$result_add_cours = "";
-
-// ajouter cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-if (isset($_POST['btn_add_cours'])) {
-    echo "Le formulaire a été soumis  -> ";
-    switch ($_POST['type_cours']) {
-        case "Texte":
-            $cours = new CoursText();
-            echo "Ajout d'un cours texte 2  -> ";
-            $result_add_cours = $cours->ajouterCours($_POST['title_cours'], $_POST['descri_cours'], $_POST['type_cours'], $_POST['text_cours'], $_POST['categorie_cours'], $_POST['tags_cours'], $_POST['photo_cours']);
-            echo "Ajout d'un cours texte 3  -> ";
-            break;
-        case "Video":
-            echo "Ajout d'un cours vidéo  -> ";
-            $cours = new CoursVideo();
-            $result_add_cours = $cours->ajouterCours($_POST['title_cours'], $_POST['descri_cours'], $_POST['type_cours'], $_POST['video_cours'], $_POST['categorie_cours'], $_POST['tags_cours'], $_POST['photo_cours']);
-            break;
-    }
-}
-
-// afficher mes cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-$course = new Cours();
-$mesCours = $course->getAllMesCours();
-
-// delete cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-if (isset($_POST['btn_delete_cours'])) {
-    $course->supprimerCours($_POST['btn_delete_cours']);
-    header("Location: dashboard_enseignant.php");
-}
 
 
 
@@ -136,23 +105,29 @@ if (isset($_POST['btn_delete_cours'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="even:bg-blue-50 hover:bg-gray-100 transition duration-150">
-                        <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]">John Doe</td>
-                        <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]">john@example.com</td>
-                        <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]">azertyu azertyui</td>
-                        <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]">2022-05-15</td>
-                        <td class="py-2 sm:py-4 flex space-x-3">
-                            <button class="text-red-500 hover:text-red-700" title="Delete">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                        data-original="#000000" />
-                                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                        data-original="#000000" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
+                    <?php if (!empty($mesInscriCours)): ?>
+                        <?php foreach ($mesInscriCours as $CRS) : ?>
+                            <tr class="even:bg-blue-50 hover:bg-gray-100 transition duration-150">
+                                <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['nom_etudiant'] ?></td>
+                                <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['email'] ?></td>
+                                <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['titre'] ?></td>
+                                <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['date_inscription'] ?></td>
+                                <td class="py-2 sm:py-4 flex space-x-3">
+                                    <button class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
+                                            <path
+                                                d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                                                data-original="#000000" />
+                                            <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                                                data-original="#000000" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else :  ?>
+                        <p class="text-md text-gray-400 text-start">Aucun cours pour ce moment ... .</p>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
