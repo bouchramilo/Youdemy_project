@@ -29,6 +29,21 @@ class Cours extends DataBase
     // fonction afficherCours ***************************************************************************************************************************************************
     protected function afficherCours() {}
 
+    // fonction getType ***************************************************************************************************************************************************
+    public function getType($id_cours)
+    {
+        $pdo = $this->connect();
+        try {
+            $sql_check_type = "SELECT type_contenu FROM cours WHERE id_cours = :id_cours";
+            $stmt_type = $pdo->prepare($sql_check_type);
+            $stmt_type->execute([':id_cours' => $id_cours]);
+            $type = $stmt_type->fetch(PDO::FETCH_ASSOC);
+            return $type ? $type['type_contenu'] : null; 
+        } catch (Exception $e) {
+            return "Erreur : Lors de la récupérationle typr d'un cours !!! " . $e->getMessage();
+        }
+    }
+
 
     // fonction getAllMesCours ***************************************************************************************************************************************************
     public function getAllMesCours()

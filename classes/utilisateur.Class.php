@@ -2,6 +2,7 @@
 
 require_once "DataBase.Class.php";
 require_once "inscription_cours.Class.php";
+require_once "cours.Class.php";
 
 class Utilisateur extends DataBase
 {
@@ -127,7 +128,7 @@ class Utilisateur extends DataBase
                             break;
                         }
                     case "Etudiant":
-                        header("Location: home.php");
+                        header("Location: mes_cours.php");
                         break;
                 };
             } else {
@@ -212,16 +213,90 @@ class Utilisateur extends DataBase
     public function isLogin($id_cours)
     {
         $coursInscrire = new InscriptionCours();
+        $course = new Cours();
+        $pdo = $this->connect();
 
         if ($this->getRole() === "Etudiant") {
-            $resultat = $coursInscrire->inscrireCours($id_cours);
-            if (!$resultat) {  
-                echo "<script>alert('Échec de l'inscription. Veuillez réessayer.');</script>";
+            $resultat = $coursInscrire->estInscrire($id_cours);
+            if ($resultat > 0) {
+                $_SESSION['type_cours'] = $course->getType($id_cours);
+                $_SESSION['id_cours'] = $id_cours;
+                header('Location: details_cours.php');
+                // exit();
+            } else {
+                echo '
+
+                    <div
+                        class="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
+                        <div class="w-full max-w-lg bg-white shadow-lg rounded-xl p-8 relative">
+                            <div>
+                                <h4 class="text-xl text-gray-800 font-semibold">Êtes-vous sûr de vouloir vous inscrire à ce cours?</h4>
+                                <p class="text-sm text-gray-600 mt-4">titre de cours</p>
+                            </div>
+
+                            <div class="flex gap-4 max-sm:flex-col mt-8 h-18 ">
+                                <button type="button" onclick="closeModal()"
+                                    class="h-full px-4 py-2 rounded-lg text-gray-800 text-sm tracking-wide border-none outline-none bg-gray-200 hover:bg-gray-300">No,
+                                    Annuler
+                                </button>
+                                <form action="" method="post" class=" ">
+                                    <button name="confirm_inscrire" value="' . $id_cours . '"
+                                        class="h-full w-full px-5 py-2.5 rounded-lg text-white text-sm tracking-wide border-none outline-none bg-[#386641] hover:bg-[#497752]">
+                                        Oui, confirmer ' . $id_cours . '
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+                ';
             }
-        } elseif ($this->getRole() === "Admin" || $this->getRole() === "Enseignant") {
-            echo "<script>alert('Les administrateurs et les enseignants ne peuvent pas s\'inscrire aux cours.');</script>";
+        } elseif ($this->getRole() === "Admin") {
+            $_SESSION['type_cours'] = $course->getType($id_cours);
+            $_SESSION['id_cours'] = $id_cours;
+            header('Location: details_cours.php');
+            // exit();
+        } elseif ($this->getRole() === "Enseignant") {
+            try {
+                $sql_check = "SELECT * FROM cours WHERE id_enseignant = :user AND id_cours = :cours";
+                $stmt_check = $pdo->prepare($sql_check);
+                $stmt_check->execute([
+                    ':user' => $_SESSION['id_utilisateur'],
+                    ':cours' => $id_cours
+                ]);
+                if ($stmt_check->rowCount() > 0) {
+                    $_SESSION['type_cours'] = $course->getType($id_cours);
+                    $_SESSION['id_cours'] = $id_cours;
+                    header('Location: E_details_cours.php');
+                    // exit();
+                } else {
+                    echo '
+                    <div class="fixed inset-0 p-4 flex flex-wrap justify-end items-end w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
+                        <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6 relative">
+                            <div class="flex items-center pb-3 border-b border-gray-300">
+                                <h3 class="text-gray-800 text-xl font-bold flex-1">Erreur</h3>
+                            </div>
+                            <div class="my-6">
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    Vous n êtes pas autorisé à accéder à ce cours. Ce contenu appartient à un autre enseignant.
+                                </p>
+                            </div>
+                            <div class="border-t border-gray-300 pt-6 flex justify-end gap-4">
+                                <button type="button" id="closeM" onclick="closeModal()"
+                                    class="px-4 py-2 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-[#386641] hover:bg-[#497752] active:bg-[#386641]">
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ';
+                }
+            } catch (Exception $e) {
+                return "Erreur : Lors de la vérification des cours !!! " . $e->getMessage();
+            }
         } else {
-            echo "<script>alert('Rôle non reconnu. Action impossible.');</script>";
+            header("Location: login.php");
+            exit();
         }
     }
 }

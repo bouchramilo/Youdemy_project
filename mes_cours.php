@@ -6,7 +6,18 @@ $inscrireCours = new InscriptionCours();
 
 $mesCours = $inscrireCours->mesCours();
 
+// details cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+if (isset($_POST['details_cours'])) {
+    $_SESSION['type_cours'] = $_POST['type_cours'];
+    $_SESSION['id_cours'] = $_POST['details_cours'];
+    header("Location: details_cours.php");
+}
 
+// details cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+if (isset($_POST['delete_from_mes_cours'])) {
+    $resultat = $inscrireCours->deleteFromMesCours($_POST['delete_from_mes_cours']);
+    header("Location: mes_cours.php");
+}
 
 
 
@@ -58,9 +69,24 @@ $mesCours = $inscrireCours->mesCours();
                                     <div class="h-0 overflow-hidden group-hover:h-16 group-hover:mt-4 transition-all duration-300">
                                         <p class="text-gray-800 text-sm"><?php echo $CRS['description']; ?>.</p>
                                     </div>
-                                    <form action="" method="post" class="w-full text-end">
-                                        <button name="isLogin" value="<?php echo $CRS['id_cours']; ?>" class="hover:underline text-[#386641]">Voir le cours</button>
-                                    </form>
+                                    <div class="w-full flex flex-row justify-between h-max">
+                                        <form action="" method="post" class="w-full text-start">
+                                            <button class="" title="Delete" name="delete_from_mes_cours" value="<?php echo $CRS['id_cours']; ?>">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                                                        data-original="#000000" />
+                                                    <path d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                                                        data-original="#000000" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                        <form action="" method="post" class="w-full text-end">
+                                            <input type="hidden" name="type_cours" value="<?php echo $CRS['type_contenu']; ?>">
+                                            <button name="details_cours" value="<?php echo $CRS['id_cours']; ?>" class="hover:underline text-[#386641]">Voir le cours</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>

@@ -7,9 +7,14 @@ $course = new Cours();
 $mesCours = $course->getAllCours();
 
 $utlstr = new Utilisateur();
+$InscrCours = new InscriptionCours();
 
-if(isset($_POST['isLogin'])){
+if (isset($_POST['isLogin'])) {
     $result = $utlstr->isLogin($_POST['isLogin']);
+}
+
+if (isset($_POST['confirm_inscrire'])) {
+    $result = $InscrCours->inscrireCours($_POST['confirm_inscrire']);
 }
 
 
@@ -155,6 +160,12 @@ if(isset($_POST['isLogin'])){
     <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
 
+    <script>
+        function closeModal() {
+            var modal = document.querySelector('.fixed');
+            modal.style.display = 'none';
+        }
+    </script>
 
 </body>
 <!-- Scripts JavaScript -->
