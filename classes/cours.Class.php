@@ -180,25 +180,26 @@ class Cours extends DataBase
         $pdo = $this->connect();
 
         try {
-            $page = (int) (isset($_GET['page']) ? 1 : $_GET['page']) ;
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
             $limit = 3;
-            $startPoint = ($page * $limit) - $limit ;
+            $startPoint = ($page - 1) * $limit;
 
             $sql_all_C = "SELECT cs.id_cours,
-                        cs.id_enseignant,
-                        cs.titre,
-                        cs.description, 
-                        cs.type_contenu,
-                        DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
-                        cs.photo, 
-                        CONCAT(u.nom, ' ' , u.prenom) as full_name 
-                        FROM cours cs
-                        LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user 
-                        LIMIT ?, ? 
-                ";
+                      cs.id_enseignant,
+                      cs.titre,
+                      cs.description, 
+                      cs.type_contenu,
+                      DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
+                      cs.photo, 
+                      CONCAT(u.nom, ' ', u.prenom) AS full_name 
+                    FROM cours cs
+                    LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user 
+                    LIMIT :startPoint, :limite";
 
             $stmt_All = $pdo->prepare($sql_all_C);
-            $stmt_All->execute([$limit, $startPoint]);
+            $stmt_All->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
+            $stmt_All->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt_All->execute();
 
             $AllCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
             return $AllCours;
@@ -206,6 +207,24 @@ class Cours extends DataBase
             return "Erreur : Lors de la récupération de tous les cours !!! " . $e->getMessage();
         }
     }
+
+
+    // fonction pour récupérer le nombre total de cours ***************************************************************************************************************************************************
+    public function getTotalCours()
+    {
+        $pdo = $this->connect();
+
+        try {
+            $sql_count = "SELECT COUNT(*) AS total FROM cours";
+            $stmt = $pdo->query($sql_count);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'] ?? 0;
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+
 
     // fonction getAllMesCours ***************************************************************************************************************************************************
     public function getAllCoursCategorie($categorie)
@@ -213,23 +232,37 @@ class Cours extends DataBase
         $pdo = $this->connect();
 
         try {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+            $limit = 3;
+            $startPoint = ($page - 1) * $limit;
 
-            $sql_all_C = "SELECT cs.id_cours,
-                        cs.id_enseignant,
-                        cs.titre,
-                        cs.description, 
-                        cs.type_contenu,
-                        DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
-                        cs.photo, 
-                        CONCAT(u.nom, ' ' , u.prenom) as full_name 
-                        FROM cours cs
-                        LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user 
-                        WHERE id_categorie = :categorie
-                        -- LIMIT 0, 3 
-                ";
+            $sql_all_C = "SELECT 
+                                cs.id_cours,
+                                cs.titre,
+                                cs.description,
+                                cs.type_contenu,
+                                cs.contenu_text,
+                                cs.contenu_video,
+                                DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
+                                cs.photo,
+                                c.titre_categorie,
+                                CONCAT(u.nom, ' ', u.prenom) AS full_name 
+                            FROM 
+                                cours cs
+                            LEFT JOIN 
+                                categorie c ON cs.id_categorie = c.id_categorie
+                            LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user 
+                            WHERE 
+                                cs.id_categorie = :id_categorie
+                            LIMIT 
+                                :startPoint, :limite;
+                    ";
 
             $stmt_All = $pdo->prepare($sql_all_C);
-            $stmt_All->execute([':categorie' => $categorie]);
+            $stmt_All->bindValue(':id_categorie', $categorie, PDO::PARAM_INT);
+            $stmt_All->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
+            $stmt_All->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt_All->execute();
 
             $AllCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
             return $AllCours;
@@ -238,35 +271,79 @@ class Cours extends DataBase
         }
     }
 
+
     // fonction getCoursByTag ***************************************************************************************************************************************************
     public function getCoursByTagId($id_tag)
     {
         $pdo = $this->connect();
 
         try {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+            $limit = 3;
+            $startPoint = ($page - 1) * $limit;
+
             $sql = "SELECT 
-                    cs.id_cours,
-                    cs.titre,
-                    cs.description,
-                    cs.type_contenu,
-                    DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
-                    cs.photo,
-                    CONCAT(u.nom, ' ', u.prenom) AS full_name,
-                    t.nom_tag
-                FROM cours cs
-                LEFT JOIN cours_tags ct ON cs.id_cours = ct.id_cours
-                LEFT JOIN tags t ON ct.id_tag = t.id_tag
-                LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user
-                WHERE t.id_tag = :id_tag";
+                cs.id_cours,
+                cs.titre,
+                cs.description,
+                cs.type_contenu,
+                DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
+                cs.photo,
+                CONCAT(u.nom, ' ', u.prenom) AS full_name,
+                t.nom_tag
+            FROM cours cs
+            LEFT JOIN cours_tags ct ON cs.id_cours = ct.id_cours
+            LEFT JOIN tags t ON ct.id_tag = t.id_tag
+            LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user
+            WHERE t.id_tag = :id_tag
+            LIMIT :startPoint, :limite;
+            ";
 
             $stmt = $pdo->prepare($sql);
-
-            $stmt->execute([':id_tag' => $id_tag]);
+            $stmt->bindValue(':id_tag', $id_tag, PDO::PARAM_INT);
+            $stmt->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
+            $stmt->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt->execute();
 
             $cours = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $cours;
         } catch (Exception $e) {
             return "Erreur : Lors de la récupération des cours par id_tag !!! " . $e->getMessage();
+        }
+    }
+
+
+
+    function searchCoursByTitle($searchTitle)
+    {
+        $pdo = $this->connect();
+
+        try {
+            $sql = " SELECT 
+                    cs.id_cours,
+                    cs.titre,
+                    cs.description,
+                    cs.type_contenu,
+                    cs.contenu_text,
+                    cs.contenu_video,
+                    DATE_FORMAT(cs.date_de_creation, '%d-%m-%Y') AS date_de_creation,
+                    cs.photo,
+                    CONCAT(u.nom, ' ', u.prenom) AS full_name
+                FROM 
+                    cours cs
+                LEFT JOIN utilisateurs u ON cs.id_enseignant = u.id_user
+                WHERE 
+                    cs.titre LIKE :searchTitle
+                ";
+
+            $stmt = $pdo->prepare($sql);
+
+            $stmt->bindValue(':searchTitle', '%' . $searchTitle . '%', PDO::PARAM_STR);
+
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return "Erreur : " . $e->getMessage();
         }
     }
 }
