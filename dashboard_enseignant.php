@@ -63,19 +63,12 @@ if (isset($_POST['details_cours'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
 
     <title>Youdemy - Enseignant</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Sawarabi%20Mincho:700|Sawarabi%20Mincho:400"> -->
-    <!-- <style>
-        body {
-            font-family: 'Sawarabi Mincho';
-            font-weight: 400;
-        }
-    </style> -->
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#fff] text-[#14120b] ">
@@ -85,7 +78,7 @@ if (isset($_POST['details_cours'])) {
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
 
-    <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center  shadow-md">
+    <section class="w-full h-20 pt-6 flex max-w-5xl max-lg:max-w-3xl max-md:max-w-sm mx-auto  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center  shadow-md">
         <div>
             <h2 class="text-3xl font-extrabold text-gray-800 inline-block">MES COURS</h2>
         </div>

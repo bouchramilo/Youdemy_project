@@ -37,8 +37,8 @@ class CoursText extends Cours
                 ':photo' => htmlspecialchars($photo)
             ]);
 
-            echo $pdo->lastInsertId();
-
+            // echo $pdo->lastInsertId();
+    
             $ID_cours = $pdo->lastInsertId();
 
             // if (!empty($tags)) {

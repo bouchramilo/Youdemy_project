@@ -2,9 +2,11 @@
 
 require_once "classes/cours.Class.php";
 require_once "classes/utilisateur.Class.php";
+require_once "classes/categorie.Class.php";
+require_once "classes/tag.Class.php";
 
 $course = new Cours();
-$mesCours = $course->getAllCours();
+// $allCours = $course->getAllCours();
 
 $utlstr = new Utilisateur();
 $InscrCours = new InscriptionCours();
@@ -19,7 +21,29 @@ if (isset($_POST['confirm_inscrire'])) {
 
 
 
+// affichage de inscription avec search +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
+    $allCours = $course->getAllCours();
+} else {
+    if (isset($_POST['search_cours']) && !empty($_POST['nom_tag'])) {
+        $allCours = $course->getCoursByTagId($_POST['nom_tag']);
+    } elseif (isset($_POST['search_categorie']) && !empty($_POST['title_categorie'])) {
+        $allCours = $course->getAllCoursCategorie($_POST['title_categorie']);
+    } else {
+        header("Location: index.php");
+    }
+}
 
+
+
+
+
+
+$tagg = new Tag();
+$categorie = new Categorie();
+
+$categories = $categorie->getAllCategorie();
+$tags = $tagg->getAllTags();
 
 
 ?>
@@ -59,15 +83,15 @@ if (isset($_POST['confirm_inscrire'])) {
                 <!-- Search Form Section -->
                 <form action="" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
                     <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
-                        <input type="email" placeholder="Search Something..."
+                        <input id="search" type="text" placeholder="Rechercher par titre de cours ..."
                             class="w-full outline-none bg-transparent text-gray-600 text-sm" />
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-gray-600">
-                                <path
-                                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
-                                </path>
-                            </svg>
-                        </button>
+                        <!-- <button> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-gray-600">
+                            <path
+                                d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                            </path>
+                        </svg>
+                        <!-- </button> -->
                     </div>
 
                 </form>
@@ -80,15 +104,61 @@ if (isset($_POST['confirm_inscrire'])) {
         <!-- Section: Cours Populaires -->
 
         <div id="catalogue" class="bg-white font-sans">
+            <section class="w-full h-max px-10 py-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max items-center bg-gray-100 shadow-md">
+                <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
+                    <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+                        <select type="email" placeholder="Search Something..." name="nom_tag"
+                            class="w-full outline-none bg-transparent text-gray-600 text-sm">
+                            <option value="">Tag</option>
+                            <?php foreach ($tags as $tg): ?>
+                                <option value="<?php echo $tg['id_tag']; ?>"><?php echo $tg['nom_tag']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <button name="search_cours">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-gray-600">
+                                <path
+                                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                                </path>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                </form>
+                <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
+                    <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+                        <select type="email" placeholder="Search Something..." name="title_categorie"
+                            class="w-full outline-none bg-transparent text-gray-600 text-sm">
+                            <option value="">Catégorie</option>
+                            <?php foreach ($categories as $categ): ?>
+                                <option value="<?php echo $categ['id_categorie']; ?>"><?php echo $categ['titre_categorie']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <button name="search_categorie">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-gray-600">
+                                <path
+                                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                                </path>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
             <div class="max-w-6xl mx-auto p-4">
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-gray-800 inline-block relative after:absolute after:w-4/6 after:h-1 after:left-0 after:right-0 after:-bottom-4 after:mx-auto after:bg-[#386641] after:rounded-lg-full">Cours Populaires</h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
+                <div id="courses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-lg:max-w-3xl max-md:max-w-md mx-auto">
 
 
-                    <?php if (!empty($mesCours)): ?>
-                        <?php foreach ($mesCours as $CRS) : ?>
+                    <?php if (!empty($allCours)): ?>
+                        <?php foreach ($allCours as $CRS) : ?>
 
                             <div class="bg-white cursor-pointer rounded-lg overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative group">
                                 <img src="<?php echo $CRS['photo']; ?>" alt="Blog Post 1" class="w-full h-96 object-cover" />
@@ -112,7 +182,7 @@ if (isset($_POST['confirm_inscrire'])) {
             </div>
         </div>
 
-        <ul class="my-10 flex space-x-5 justify-center font-[sans-serif]">
+        <ul class="my-10 flex space-x-5 justify-center font-[sans-serif] bg-yellow-300">
             <li class="flex items-center justify-center shrink-0 hover:bg-gray-50 cursor-pointer w-9 h-9 rounded-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-400" viewBox="0 0 55.753 55.753">
                     <path
@@ -167,8 +237,14 @@ if (isset($_POST['confirm_inscrire'])) {
         }
     </script>
 
+
+    <script>
+
+    </script>
+
 </body>
 <!-- Scripts JavaScript -->
 <script src="js/menu_header.js"></script>
+<script src="js/search.js"></script>
 
 </html>

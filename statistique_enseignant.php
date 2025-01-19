@@ -6,14 +6,20 @@ require_once "classes/categorie.Class.php";
 require_once "classes/cours_texte.Class.php";
 require_once "classes/cours_video.Class.php";
 require_once "classes/inscription_cours.Class.php";
+require_once "classes/enseignant.Class.php";
 
 $inscrireCours = new InscriptionCours();
 $course = new Cours();
 $categorie = new Categorie();
 
 
+$enseignant = new Enseignant();
+$statistique = $enseignant->getNombreInscriptionsParCours();
+
 
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -37,126 +43,50 @@ $categorie = new Categorie();
 
 
 
-    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <div class="cards w-[100%] py-[35px] px-[40px] grid grid-cols-3 gap-[40px]">
-        <div class="card p-[20px] flex align-center space-around bg-[#fff] rounded-lg shadow-md relative">
-            <div class="card_content ">
-                <div class="number text-2xl font-bold text-red-700 pb-[10px]"><?php ?></div>
-                <div class="card_name text-[#d5d5d5] font-[700] text-md">games</div>
+
+
+
+
+    <div class="w-full bg-gray-100 py-10 px-6 md:px-8 lg:px-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Nombre d'étudiants inscrits -->
+            <div class="flex flex-col sm:flex-row items-center justify-between p-6 bg-green-500 text-white rounded-lg shadow-md">
+                <div class="text-center sm:text-left flex gap-4">
+                    <img src="images/icons/ecrire.png" alt="Nombre d'étudiants" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
+                    <div class="flex flex-col gap-4 ">
+                        <h3 class="text-xl sm:text-2xl font-semibold">Étudiants inscrits</h3>
+                        <p class="mt-2 text-lg"><?php echo $statistique['nb_inscriptions'] ?> étudiants</p>
+                    </div>
+                </div>
             </div>
-            <div class="icon_box text-lg text-red-600">
-                <i class="fas fa-gamepad bottom-10 right-2 absolute" style="color: rgb(169, 34, 34); font-size: 2rem;"></i>
-            </div>
-        </div>
-        <div class="card card p-[20px] flex align-center space-between bg-[#fff] rounded-lg shadow-md relative">
-            <div class="card_content">
-                <div class="number text-2xl font-bold text-red-700 pb-[10px]"><?php ?></div>
-                <div class="card_name  text-[#d5d5d5] font-[700]">users</div>
-            </div>
-            <div class="icon_box">
-                <i class="fas fa-users bottom-10 right-2 absolute" style="color: rgb(169, 34, 34); font-size: 2rem;"></i>
-            </div>
-        </div>
-        <div class="card card p-[20px] flex align-center space-between bg-[#fff] rounded-lg shadow-md relative">
-            <div class="card_content">
-                <div class="number text-2xl font-bold text-red-700 pb-[10px]"><?php ?></div>
-                <div class="card_name  text-[#d5d5d5] font-[700]">Favoris</div>
-            </div>
-            <div class="icon_box">
-                <i class="fas fa-heart bottom-10 right-2 absolute" style="color: rgb(169, 34, 34); font-size: 2rem;"></i>
-            </div>
-        </div>
-    </div>
-    <div class="charts grid  grid-cols-3  gap-[40px] w-[100%] p-[40px] pt-[0]">
-        <div class="chart bg-white p-[20px] rounded-[10px] shadow-lg">
-            <h2>les games ajoutees au bibliotheque</h2>
-            <div>
-                <canvas id="myCharttroi"></canvas>
+
+            <!-- Nombre de cours -->
+            <div class="flex flex-col sm:flex-row items-center justify-between p-6 bg-blue-500 text-white rounded-lg shadow-md">
+                <div class="text-center sm:text-left flex gap-4">
+                    <img src="images/icons/livre.png" alt="Nombre de cours" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
+                    <div class="flex flex-col gap-4 ">
+                        <h3 class="text-xl sm:text-2xl font-semibold">Mes cours</h3>
+                        <p class="mt-2 text-lg"><?php echo $statistique['nb_cours'] ?> cours</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="chart bg-white p-[20px] rounded-[10px] shadow-lg">
-            <h2>status des games</h2>
-            <canvas id="myCharttwo"></canvas>
-        </div>
-        <div class="chart bg-white p-[20px] rounded-[10px] shadow-lg">
-            <h2>les games ajoutee au favoris</h2>
-            <canvas id="myChart"></canvas>
+
+        <!-- graphique des inscriptions -->
+        <div class="mt-8">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-md">
+                <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center sm:text-left">
+                    Inscriptions par cours
+                </h2>
+                <canvas id="inscriptionsChart" class="w-full h-[300px] sm:h-[400px]"></canvas>
+            </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <!-- chart.js ============================================================================================================================================================ -->
-    <script>
-        const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['favoris ', 'pas favoris'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [<?= $admin->allfavorisbygame(); ?>, <?= $admin->allgames() - $admin->allfavorisbygame(); ?>],
-                    backgroundColor: [
-                        'rgba(41,155,99,1)',
-                        'rgba(54,162,235,1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true
-
-            }
-        });
-
-        const ftx = document.getElementById('myCharttroi');
-
-        new Chart(ftx, {
-            type: 'doughnut',
-            data: {
-                labels: ['ajouter ', 'pas encors'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [<?= $admin->allbib(); ?>, <?= $admin->allgames() - $admin->allbib(); ?>],
-                    backgroundColor: [
-                        'rgba(41,155,99,1)',
-                        'rgba(54,162,235,1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true
-
-            }
-        });
-
-        const dtx = document.getElementById('myCharttwo');
-
-        new Chart(dtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['encore ', 'terminee', 'abondonne'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [<?= $admin->allencours(); ?>, <?= $admin->alltermine();  ?>, <?= $admin->allabandonne(); ?>],
-                    backgroundColor: [
-                        'rgba(41,155,99,1)',
-                        'rgba(54,162,235,1)',
-                        'rgba(94,162,150,1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true
-
-            }
-        });
-    </script>
-    <!-- </div> -->
-
+ 
 
 
 

@@ -19,7 +19,7 @@ if (isset($_POST['delete_from_inscription'])) {
     header("Location: inscription_cours.php");
 }
 
-
+// affichage de inscription avec search 
 if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
     $mesInscriCours = $inscrireCours->AllInscriptionMesCours();
 } else {

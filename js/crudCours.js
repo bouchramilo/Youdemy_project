@@ -14,22 +14,22 @@ close.addEventListener("click", () => {
 // update cours model +++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Sélection des éléments
-const updateCours = document.querySelector(".updateCours");
-const closeU = document.querySelector(".closeU");
-const coursUpdateModal = document.querySelector(".coursUpdateModal");
+// const updateCours = document.querySelector(".updateCours");
+// const closeU = document.querySelector(".closeU");
+// const coursUpdateModal = document.querySelector(".coursUpdateModal");
 
 // Vérifiez si les éléments existent avant d'ajouter des événements
-if (updateCours && closeU && coursUpdateModal) {
-  updateCours.addEventListener("click", () => {
-    coursUpdateModal.classList.toggle("hidden");
-  });
+// if (updateCours && closeU && coursUpdateModal) {
+//   updateCours.addEventListener("click", () => {
+//     coursUpdateModal.classList.toggle("hidden");
+//   });
 
-  closeU.addEventListener("click", () => {
-    coursUpdateModal.classList.toggle("hidden");
-  });
-} else {
-  console.error("Un ou plusieurs éléments DOM nécessaires sont manquants.");
-}
+//   closeU.addEventListener("click", () => {
+//     coursUpdateModal.classList.toggle("hidden");
+//   });
+// } else {
+//   console.error("Un ou plusieurs éléments DOM nécessaires sont manquants.");
+// }
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
