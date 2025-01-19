@@ -9,13 +9,13 @@ require_once "classes/inscription_cours.Class.php";
 require_once "classes/enseignant.Class.php";
 
 $inscrireCours = new InscriptionCours();
-$course = new Cours();
-$categorie = new Categorie();
-
-
 $enseignant = new Enseignant();
-$statistique = $enseignant->getNombreInscriptionsParCours();
 
+$nbrMerCours = $enseignant->getNbrMesCours();
+$NbrinscriptionCours = $enseignant->getNbrinscriptionCours();
+
+$data = $enseignant->getNombreInscriptionsParCours();
+echo '<script> const chartData = ' . json_encode($data) . ';</script>';
 
 ?>
 
@@ -32,6 +32,7 @@ $statistique = $enseignant->getNombreInscriptionsParCours();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <title>Youdemy - E : Statistique</title>
 </head>
 
@@ -55,7 +56,7 @@ $statistique = $enseignant->getNombreInscriptionsParCours();
                     <img src="images/icons/ecrire.png" alt="Nombre d'étudiants" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
                     <div class="flex flex-col gap-4 ">
                         <h3 class="text-xl sm:text-2xl font-semibold">Étudiants inscrits</h3>
-                        <p class="mt-2 text-lg"><?php echo $statistique['nb_inscriptions'] ?> étudiants</p>
+                        <p class="mt-2 text-lg"><?php echo $NbrinscriptionCours; ?> étudiants</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +67,7 @@ $statistique = $enseignant->getNombreInscriptionsParCours();
                     <img src="images/icons/livre.png" alt="Nombre de cours" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
                     <div class="flex flex-col gap-4 ">
                         <h3 class="text-xl sm:text-2xl font-semibold">Mes cours</h3>
-                        <p class="mt-2 text-lg"><?php echo $statistique['nb_cours'] ?> cours</p>
+                        <p class="mt-2 text-lg"><?php echo $nbrMerCours; ?> cours</p>
                     </div>
                 </div>
             </div>
@@ -83,18 +84,39 @@ $statistique = $enseignant->getNombreInscriptionsParCours();
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script>
+        const xValues = chartData.map(item => item.titre_cours);
+        const yValues = chartData.map(item => item.nb_inscriptions);
 
- 
+        const barColors = ["#ff6384", "#36a2eb", "#cc65fe", "#ffce56", "#4bc0c0"];
 
-
-
-
-
-
-
-
+        new Chart("inscriptionsChart", {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: "Nombre d'inscriptions",
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    title: {
+                        display: true,
+                        text: "Nombre d'inscriptions par cours"
+                    }
+                }
+            }
+        });
+    </script>
 
 
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
