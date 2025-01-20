@@ -91,11 +91,14 @@ if (isset($_POST['btn_update_cours'])) {
     <?php include "header.php"; ?>
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
     <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center shadow-md">
         <div class="text-4xl font-semibold text-gray-800"><?php echo $cours_actuel['titre']; ?></div>
         <div class="flex max-sm:flex-col sm:flex-col md:flex-row max-sm:text-xs gap-4">
-            <button type="button" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>
+            <button type="button" <?php if ($utilstr->getStatus() === "Suspendu") {
+                                        echo 'disabled';
+                                    } ?>
                 class=" updateCours flex gap-2  bg-yellow-400 hover:bg-yellow-500 transition-colors duration-300 text-white px-6 py-2 rounded shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-white hover:fill-white"
                     viewBox="0 0 348.882 348.882">
@@ -110,6 +113,8 @@ if (isset($_POST['btn_update_cours'])) {
             </button>
         </div>
     </section>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
     <section class="min-h-screen w-full bg-gray-50 p-6">
         <section class="flex flex-col sm:flex-row gap-6 w-full bg-white shadow-lg rounded-lg overflow-hidden">
@@ -261,7 +266,7 @@ if (isset($_POST['btn_update_cours'])) {
     <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
 
-
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <script>
         const updateCours = document.querySelector(".updateCours");
         const close = document.querySelector(".closeU");

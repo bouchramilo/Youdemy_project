@@ -160,7 +160,6 @@ class Cours extends DataBase
         $pdo = $this->connect();
 
         try {
-
             $sql_dlt_cours = "DELETE FROM cours WHERE id_cours = :id_cours";
 
             $stmt_dlt = $pdo->prepare($sql_dlt_cours);

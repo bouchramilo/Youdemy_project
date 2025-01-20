@@ -58,7 +58,7 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
 
 
 
-
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max items-center bg-gray-100 shadow-md">
         <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
             <div class="flex px-4 py-3 w-2/3 max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
@@ -106,7 +106,7 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
     </section>
 
 
-
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <section class="min-h-screen w-full py-10 max-sm:py-10  bg-gray-100">
         <div class="px-10 pb-6 text-4xl max-sm:text-2xl max-sm:px-4 font-semibold text-gray-800">Les inscription de mes cours : </div>
         <div class="overflow-x-auto font-[sans-serif] shadow-md max-sm:w-full px-2 max-sm:p-1">
@@ -131,7 +131,9 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
                                 <td class="py-2 sm:py-4 flex space-x-3 justify-center">
                                     <form action="" method="post" class="">
                                         <input type="hidden" name="id_etudiant" value="<?php echo $CRS['id_user'] ?>">
-                                        <button name="delete_from_inscription" class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>>
+                                        <button name="delete_from_inscription" class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>" <?php if ($utilstr->getStatus() === "Suspendu") {
+                                                                                                                                                                                    echo 'disabled';
+                                                                                                                                                                                } ?>>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                                                 <path
                                                     d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
@@ -151,14 +153,6 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
             </table>
         </div>
     </section>
-
-
-
-
-
-
-
-
 
 
 

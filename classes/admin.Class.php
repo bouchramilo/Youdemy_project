@@ -87,7 +87,6 @@ class Admin extends Utilisateur
         }
     }
 
-
     // fonction getRepartitionParCategorie ***************************************************************************************************************************************************
     public function getRepartitionParCategorie()
     {

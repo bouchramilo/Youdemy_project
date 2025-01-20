@@ -11,7 +11,7 @@ show TABLES;
 
 -- la cr&ation des tables : ==============================================================================================================================================
 
--- Tables utilisateurs :
+-- Tables utilisateurs : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE utilisateurs (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -27,21 +27,20 @@ CREATE TABLE utilisateurs (
     status ENUM('Suspendu', 'Activer') DEFAULT 'Activer'
 );
 
--- Table enseignants :
+-- Table enseignants : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE enseignants (
-    -- id_enseignant INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL PRIMARY KEY,
     estValide BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (id_user) REFERENCES utilisateurs (id_user) ON DELETE CASCADE
 );
 
--- Table categorie :
+-- Table categorie : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE categorie (
     id_categorie INT AUTO_INCREMENT PRIMARY KEY,
     titre_categorie VARCHAR(255) NOT NULL
 );
 
--- Table cours : (text - video)
+-- Table cours : (text - video) +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE cours (
     id_cours INT AUTO_INCREMENT PRIMARY KEY,
     id_enseignant INT NOT NULL,
@@ -53,13 +52,11 @@ CREATE TABLE cours (
     date_de_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     id_categorie INT DEFAULT NULL,
     photo VARCHAR(255) NOT NULL,
-    -- photo BLOB DEFAULT NULL,
-    -- mime VARCHAR(255) DEFAULT NULL,
     FOREIGN KEY (id_categorie) REFERENCES categorie (id_categorie) ON DELETE SET NULL,
     FOREIGN KEY (id_enseignant) REFERENCES enseignants (id_user) ON DELETE CASCADE
 );
 
--- Table inscription cours :
+-- Table inscription cours : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE inscription_cours (
     id_user INT NOT NULL,
     id_cours INT NOT NULL,
@@ -69,13 +66,13 @@ CREATE TABLE inscription_cours (
     FOREIGN KEY (id_cours) REFERENCES cours (id_cours) ON DELETE CASCADE
 );
 
--- Table tags :
+-- Table tags : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE tags (
     id_tag INT AUTO_INCREMENT PRIMARY KEY,
     nom_tag VARCHAR(255) NOT NULL
 );
 
--- Table cours_tags :
+-- Table cours_tags : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CREATE TABLE cours_tags (
     id_cours INT NOT NULL,
     id_tag INT NOT NULL,

@@ -11,15 +11,15 @@ $course = new Cours();
 $utlstr = new Utilisateur();
 $InscrCours = new InscriptionCours();
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (isset($_POST['isLogin'])) {
     $result = $utlstr->isLogin($_POST['isLogin']);
 }
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (isset($_POST['confirm_inscrire'])) {
     $result = $InscrCours->inscrireCours($_POST['confirm_inscrire']);
 }
-
-
 
 // affichage de inscription avec search +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $limit = 3;
@@ -44,9 +44,7 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie']) && !iss
     }
 }
 
-
-
-
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $tagg = new Tag();
 $categorie = new Categorie();
 
@@ -55,9 +53,8 @@ $tags = $tagg->getAllTags();
 
 
 ?>
-<?php
 
-?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -161,7 +158,7 @@ $tags = $tagg->getAllTags();
 
             </section>
 
-
+            <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
             <div class="max-w-6xl mx-auto p-4">
                 <div class="text-center">
@@ -191,11 +188,11 @@ $tags = $tagg->getAllTags();
                     <?php endif; ?>
                 </div>
 
-                <!-- Pagination -->
+                <!-- Pagination +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
                 <div class="flex justify-center mt-8">
                     <nav>
                         <ul class="inline-flex space-x-2">
-                            <!-- Bouton "Précédent" -->
+                            <!-- bouton "Précédent" -->
                             <?php if ($page > 1): ?>
                                 <li>
                                     <a href="?page=<?php echo $page - 1; ?>" class="px-3 py-1 bg-[#386641] text-white rounded hover:bg-[#264d32]">Précédent</a>
@@ -211,7 +208,7 @@ $tags = $tagg->getAllTags();
                                 </li>
                             <?php endfor; ?>
 
-                            <!-- Bouton "Suivant" -->
+                            <!-- bouton "Suivant" -->
                             <?php if ($page < $totalPages): ?>
                                 <li>
                                     <a href="?page=<?php echo $page + 1; ?>" class="px-3 py-1 bg-[#386641] text-white rounded hover:bg-[#264d32]">Suivant</a>
@@ -233,6 +230,7 @@ $tags = $tagg->getAllTags();
     <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
 
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <script>
         function closeModal() {
             var modal = document.querySelector('.fixed');
@@ -248,6 +246,5 @@ $tags = $tagg->getAllTags();
 </body>
 <!-- Scripts JavaScript -->
 <script src="js/menu_header.js"></script>
-<!-- <script src="js/search.js"></script> -->
 
 </html>

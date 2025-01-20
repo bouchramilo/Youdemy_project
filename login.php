@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </button>
         </div>
 
-        <!-- Lien S'inscrire -->
+        <!-- Lien s'inscrire -->
         <p class="text-sm text-center text-[#0c0d08]">
           Pas encore de compte ?
           <a href="register.php" class="text-[#ceed15] hover:underline font-medium">S'inscrire</a>

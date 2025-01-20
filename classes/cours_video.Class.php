@@ -12,10 +12,10 @@ class CoursVideo extends Cours
         $pdo = $this->connect();
 
         // Validation des données de cours (cette fonction est défini dans la classe 'Cours')
-        // $validationResult =  parent::validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo);
-        // if ($validationResult !== true) {
-        //     return $validationResult;
-        // }
+        $validationResult =  parent::validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo);
+        if ($validationResult !== true) {
+            return $validationResult;
+        }
 
         try {
             $pdo->beginTransaction();

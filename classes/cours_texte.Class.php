@@ -1,9 +1,6 @@
 <?php
-// session_start();
 require_once "DataBase.Class.php";
 require_once "cours.Class.php";
-// session_start();
-
 
 class CoursText extends Cours
 {
@@ -25,8 +22,6 @@ class CoursText extends Cours
                         VALUES (:id_enseignant, :titre, :descri, :type_contenu, :contenu_text, :id_categorie, :photo)";
             $stmt_add_cours = $pdo->prepare($sql_add_C_T);
 
-            echo "test ttttttttttttttttt";
-            echo gettype($_SESSION['id_utilisateur']);
             $stmt_add_cours->execute([
                 ':id_enseignant' => $_SESSION['id_utilisateur'],
                 ':titre' => htmlspecialchars($titre),
@@ -37,11 +32,7 @@ class CoursText extends Cours
                 ':photo' => htmlspecialchars($photo)
             ]);
 
-            // echo $pdo->lastInsertId();
-    
             $ID_cours = $pdo->lastInsertId();
-
-            // if (!empty($tags)) {
 
             foreach ($tags as $tag_id) {
                 $sql_add_TC = "INSERT INTO cours_tags (id_cours, id_tag) VALUES (:ID_cours, :id_tag)";
@@ -51,7 +42,6 @@ class CoursText extends Cours
                     ':id_tag' => $tag_id
                 ]);
             }
-            // }
 
             $pdo->commit();
             return true;
@@ -60,7 +50,6 @@ class CoursText extends Cours
             return "Erreur : Lors de l'insertion de cours ou de tags !!! " . $e->getMessage();
         }
     }
-
 
     // fonction showCours ***************************************************************************************************************************************************
     public function afficherCours()

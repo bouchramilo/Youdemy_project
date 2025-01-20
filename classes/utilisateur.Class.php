@@ -46,7 +46,6 @@ class Utilisateur extends DataBase
     {
         $pdo = $this->connect();
 
-        // Validation des données
         $validationResult = $this->validateDonnees($nom, $prenom, $email, $role, $photo, $motDePasse1, $motDePasse2);
         if ($validationResult !== true) {
             return $validationResult;
@@ -251,7 +250,6 @@ class Utilisateur extends DataBase
                 $_SESSION['type_cours'] = $course->getType($id_cours);
                 $_SESSION['id_cours'] = $id_cours;
                 header('Location: details_cours.php');
-                // exit();
             } else {
                 echo '
 
@@ -283,7 +281,6 @@ class Utilisateur extends DataBase
             $_SESSION['type_cours'] = $course->getType($id_cours);
             $_SESSION['id_cours'] = $id_cours;
             header('Location: details_cours.php');
-            // exit();
         } elseif ($this->getRole() === "Enseignant") {
             try {
                 $sql_check = "SELECT * FROM cours WHERE id_enseignant = :user AND id_cours = :cours";
@@ -296,7 +293,6 @@ class Utilisateur extends DataBase
                     $_SESSION['type_cours'] = $course->getType($id_cours);
                     $_SESSION['id_cours'] = $id_cours;
                     header('Location: E_details_cours.php');
-                    // exit();
                 } else {
                     echo '
                     <div class="fixed inset-0 p-4 flex flex-wrap justify-end items-end w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">

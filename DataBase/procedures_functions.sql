@@ -53,35 +53,3 @@ DELIMITER ;
 
 
 
-
-
-
-
-
-
-
-
-
-
-SELECT 
-    ic.id_user,
-    CONCAT(u.prenom, ' ', u.nom) AS nom_etudiant,
-    u.email,
-    c.id_cours,
-    c.titre,
-    c.description,
-    c.type_contenu,
-    c.photo,
-    DATE_FORMAT(ic.date_inscription, '%d-%m-%Y') AS date_inscription,
-    cat.titre_categorie
-FROM 
-    inscription_cours ic
-INNER JOIN 
-    cours c ON ic.id_cours = c.id_cours
-LEFT JOIN 
-    categorie cat ON c.id_categorie = cat.id_categorie
-INNER JOIN 
-    utilisateurs u ON ic.id_user = u.id_user
-WHERE 
-    c.id_enseignant = 2 AND c.id_cours = 5
-ORDER BY date_inscription;

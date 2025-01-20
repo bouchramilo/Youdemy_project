@@ -1,6 +1,5 @@
 <?php
 
-
 require_once "DataBase.Class.php";
 
 class Categorie extends DataBase

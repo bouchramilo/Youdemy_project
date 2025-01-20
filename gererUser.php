@@ -8,25 +8,25 @@ $userr = new Utilisateur();
 
 $allUsers = $admin->getAllUsers();
 
+// compte is valide : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (isset($_POST['cptIsValide'])) {
     $isVld = $admin->valideEnseignant($_POST['cptIsValide']);
     echo $isVld;
 }
 
+// delete user : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (isset($_POST['btn_delete_user'])) {
     $userr->deleteUser($_POST['btn_delete_user']);
-    // echo "<script>alert(" . $_POST['btn_delete_user'] . ")</script>";
 }
 
-// update status users : 
+// update status users : +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 if (isset($_POST['status_update'])) {
     $rsltUpdateStatus = $userr->updateStatus($_POST['id_utilisateur'], $_POST['status_update']);
 }
 
-
-
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -34,16 +34,9 @@ if (isset($_POST['status_update'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-    <title>Youdemy - Admin</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Sawarabi%20Mincho:700|Sawarabi%20Mincho:400"> -->
-    <!-- <style>
-        body {
-            font-family: 'Sawarabi Mincho';
-            font-weight: 400;
-        }
-    </style> -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <title>Youdemy - Admin</title>
+
 </head>
 
 <body class="bg-[#fff] text-[#14120b] ">
@@ -103,9 +96,9 @@ if (isset($_POST['status_update'])) {
                             </td>
                             <td class="p-4 text-sm max-sm:text-xs">
                                 <?php if ($user['role'] === 'Etudiant' || $user['role'] === 'Admin'): ?>
-                                    <!-- <form action="" method="post"> -->
+
                                     <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] opacity-50 rounded-md ">invalider
-                                        <!-- </form> -->
+
                                     <?php else: ?>
 
                                         <?php if ($user['estValide'] === 1): ?>
@@ -141,17 +134,6 @@ if (isset($_POST['status_update'])) {
                                 <?php endif; ?>
                             </td>
                             <td class="p-4">
-                                <!-- <button class="mr-4" title="Edit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-blue-500 hover:fill-blue-700"
-                                        viewBox="0 0 348.882 348.882">
-                                        <path
-                                            d="m333.988 11.758-.42-.383A43.363 43.363 0 0 0 304.258 0a43.579 43.579 0 0 0-32.104 14.153L116.803 184.231a14.993 14.993 0 0 0-3.154 5.37l-18.267 54.762c-2.112 6.331-1.052 13.333 2.835 18.729 3.918 5.438 10.23 8.685 16.886 8.685h.001c2.879 0 5.693-.592 8.362-1.76l52.89-23.138a14.985 14.985 0 0 0 5.063-3.626L336.771 73.176c16.166-17.697 14.919-45.247-2.783-61.418zM130.381 234.247l10.719-32.134.904-.99 20.316 18.556-.904.99-31.035 13.578zm184.24-181.304L182.553 197.53l-20.316-18.556L294.305 34.386c2.583-2.828 6.118-4.386 9.954-4.386 3.365 0 6.588 1.252 9.082 3.53l.419.383c5.484 5.009 5.87 13.546.861 19.03z"
-                                            data-original="#000000" />
-                                        <path
-                                            d="M303.85 138.388c-8.284 0-15 6.716-15 15v127.347c0 21.034-17.113 38.147-38.147 38.147H68.904c-21.035 0-38.147-17.113-38.147-38.147V100.413c0-21.034 17.113-38.147 38.147-38.147h131.587c8.284 0 15-6.716 15-15s-6.716-15-15-15H68.904C31.327 32.266.757 62.837.757 100.413v180.321c0 37.576 30.571 68.147 68.147 68.147h181.798c37.576 0 68.147-30.571 68.147-68.147V153.388c.001-8.284-6.715-15-14.999-15z"
-                                            data-original="#000000" />
-                                    </svg>
-                                </button> -->
                                 <form action="" method="post">
                                     <button class="mr-4" title="Delete" name="btn_delete_user" value="<?= $user['id_user']; ?>"
                                         <?php if ($user['role'] === 'Admin') {
@@ -193,7 +175,6 @@ if (isset($_POST['status_update'])) {
                     </label>
                     <select id="status" name="status_update" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
                         <option value="Suspendu">Suspendu</option>
-                        <!-- <option value="Supprimer">Supprimer</option> -->
                         <option value="Activer">Activer</option>
                     </select>
                 </div>

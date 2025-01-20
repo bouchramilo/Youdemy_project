@@ -13,21 +13,17 @@ $tag = new Tag();
 $categorie = new Categorie();
 $tags = $tag->getAllTags();
 $categories = $categorie->getAllCategorie();
-$result_add_cours = "";
 
 // ajouter cours ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+$result_add_cours = "";
 
 if (isset($_POST['btn_add_cours'])) {
-    echo "Le formulaire a été soumis  -> ";
     switch ($_POST['type_cours']) {
         case "Texte":
             $cours = new CoursText();
-            echo "Ajout d'un cours texte 2  -> ";
             $result_add_cours = $cours->ajouterCours($_POST['title_cours'], $_POST['descri_cours'], $_POST['type_cours'], $_POST['text_cours'], $_POST['categorie_cours'], $_POST['tags_cours'], $_POST['photo_cours']);
-            echo "Ajout d'un cours texte 3  -> ";
             break;
         case "Video":
-            echo "Ajout d'un cours vidéo  -> ";
             $cours = new CoursVideo();
             $result_add_cours = $cours->ajouterCours($_POST['title_cours'], $_POST['descri_cours'], $_POST['type_cours'], $_POST['video_cours'], $_POST['categorie_cours'], $_POST['tags_cours'], $_POST['photo_cours']);
             break;
@@ -81,20 +77,22 @@ $utilstr = new Utilisateur();
     <?php include "header.php"; ?>
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
-
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <section class="w-full h-20 pt-6 flex max-w-5xl max-lg:max-w-3xl max-md:max-w-sm mx-auto  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center  shadow-md">
         <div>
             <h2 class="text-3xl font-extrabold text-gray-800 inline-block">MES COURS</h2>
         </div>
         <div class="flex max-sm:flex-col sm:flex-col md:flex-row max-sm:text-xs gap-4">
             <form action="" method="post">
-                <button type="button" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>
+                <button type="button" <?php if ($utilstr->getStatus() === "Suspendu") {
+                                            echo 'disabled';
+                                        } ?>
                     class="addCours bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">&#10010; | Ajouter
                 </button>
             </form>
         </div>
     </section>
-
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
     <div class="bg-white font-sans p-4 min-h-screen">
         <div class="max-w-5xl max-lg:max-w-3xl max-md:max-w-sm mx-auto">
@@ -117,7 +115,9 @@ $utilstr = new Utilisateur();
                             <span class="text-sm block text-gray-400 mt-2"><?php echo $courss['date_de_creation']; ?> | <?php echo $courss['type_contenu']; ?></span>
                             <p class="text-sm text-gray-500 mt-4"><?php echo $courss['description']; ?></p>
                             <form action="" method="post" class="w-full text-end mt-2">
-                                <button class="" title="Delete" name="btn_delete_cours" value="<?php echo $courss['id_cours']; ?>" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>>
+                                <button class="" title="Delete" name="btn_delete_cours" value="<?php echo $courss['id_cours']; ?>" <?php if ($utilstr->getStatus() === "Suspendu") {
+                                                                                                                                        echo 'disabled';
+                                                                                                                                    } ?>>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                                         <path
@@ -130,10 +130,7 @@ $utilstr = new Utilisateur();
                             </form>
                         </div>
                     </div>
-
                 <?php endforeach; ?>
-
-
             </div>
         </div>
     </div>
@@ -228,6 +225,8 @@ $utilstr = new Utilisateur();
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
     <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <script>
         new MultiSelectTag("tags_update"); // id
     </script>

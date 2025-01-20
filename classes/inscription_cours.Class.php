@@ -34,7 +34,6 @@ class InscriptionCours extends DataBase
         $pdo = $this->connect();
 
         try {
-
             $sql_check = "SELECT * FROM inscription_cours WHERE id_cours = :id_cours AND id_user = :id_user";
             $stmt_check = $pdo->prepare($sql_check);
             $stmt_check->execute([
@@ -91,7 +90,7 @@ class InscriptionCours extends DataBase
         }
     }
 
-    // fonction deleteFromMesCours 
+    // fonction deleteFromMesCours ***************************************************************************************************************************************************
     public function deleteFromMesCours($id_cours)
     {
         $pdo = $this->connect();

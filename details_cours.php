@@ -44,41 +44,44 @@ switch ($_SESSION['type_cours']) {
         <div class="text-4xl font-semibold text-gray-800"><?php echo $cours_actuel['titre']; ?></div>
     </section>
 
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
     <section class="min-h-screen w-full bg-gray-50 p-6">
         <section class="flex flex-col sm:flex-row gap-6 w-full bg-white shadow-lg rounded-lg overflow-hidden">
             <!-- Section principale -->
             <div class="w-full sm:w-8/12 flex flex-col gap-6">
-                
-                
+
+
                 <?php if ($_SESSION['type_cours'] === "Video") : ?>
                     <iframe
-                    class="w-full aspect-video rounded-lg"
-                    src="<?php echo $cours_actuel['content']; ?>"
-                    title="Vidéo YouTube"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-                
+                        class="w-full aspect-video rounded-lg"
+                        src="<?php echo $cours_actuel['content']; ?>"
+                        title="Vidéo YouTube"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+
                 <?php elseif ($_SESSION['type_cours'] === "Texte") : ?>
                     <p class="p-10 max-sm:p-4">
                         <?php echo nl2br(htmlspecialchars($cours_actuel['content'])); ?>
                     </p>
-                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+
+            <!-- Section latérale -->
+            <div class="w-full sm:w-4/12 flex flex-col gap-4 items-center bg-gray-50 p-4 min-h-screen">
+                <img src="<?php echo $cours_actuel['photo']; ?>" alt="images de cours" class="h-72 w-full object-cover rounded-t-lg sm:rounded-none">
+                <div class="w-full border border-yellow-400 rounded-lg p-4 text-gray-700">
+                    <p class="text-md max-sm:text-sm font-semibold">Auteur : <span class="font-normal"><?php echo $cours_actuel['full_name']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Catégorie : <span class="font-normal"><?php echo $cours_actuel['titre_categorie']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Description : <span class="font-normal"><?php echo $cours_actuel['description']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Date de création : <span class="font-normal"><?php echo $cours_actuel['date_de_creation']; ?></span></p>
                 </div>
-                
-                <!-- Section latérale -->
-                <div class="w-full sm:w-4/12 flex flex-col gap-4 items-center bg-gray-50 p-4 min-h-screen">
-                    <img src="<?php echo $cours_actuel['photo']; ?>" alt="images de cours" class="h-72 w-full object-cover rounded-t-lg sm:rounded-none">
-                    <div class="w-full border border-yellow-400 rounded-lg p-4 text-gray-700">
-                        <p class="text-md max-sm:text-sm font-semibold">Auteur : <span class="font-normal"><?php echo $cours_actuel['full_name']; ?></span></p>
-                        <p class="text-md max-sm:text-sm font-semibold">Catégorie : <span class="font-normal"><?php echo $cours_actuel['titre_categorie']; ?></span></p>
-                        <p class="text-md max-sm:text-sm font-semibold">Description : <span class="font-normal"><?php echo $cours_actuel['description']; ?></span></p>
-                        <p class="text-md max-sm:text-sm font-semibold">Date de création : <span class="font-normal"><?php echo $cours_actuel['date_de_creation']; ?></span></p>
-                    </div>
             </div>
         </section>
     </section>
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
     <?php include "footer.php"; ?>

@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="mb-2">
                     <label for="nom" class="block text-sm font-medium text-[#0c0d08] mb-1">Nom</label>
                     <input type="nom" id="nom" name="nom" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre nom">
                 </div>
 
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="mb-2">
                     <label for="prenom" class="block text-sm font-medium text-[#0c0d08] mb-1">Prénom</label>
                     <input type="prenom" id="prenom" name="prenom" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre prenom">
                 </div>
 
@@ -52,24 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="mb-2">
                     <label for="photo" class="block text-sm font-medium text-[#0c0d08] mb-1">Photo</label>
                     <input type="url" id="photo" name="photo" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre photo">
                 </div>
-
-                <!-- date de birth -->
-                <!-- <div class="mb-2">
-                    <label for="dateBirth" class="block text-sm font-medium text-[#0c0d08] mb-1">date de naissance</label>
-                    <input type="date" id="dateBirth" name="dateBirth" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
-                        placeholder="Entrer votre date de naissance">
-                </div> -->
 
                 <!-- Rôle -->
                 <div class="mb-2">
                     <label for="role" class="block text-sm font-medium text-gray-700">Choisissez votre rôle</label>
                     <select id="role" name="role" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]">
-                        <!-- <option value=""></option> -->
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]">
                         <option value="Etudiant">Étudiant</option>
                         <option value="Enseignant">Enseignant</option>
                     </select>
@@ -79,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="mb-2">
                     <label for="email" class="block text-sm font-medium text-[#0c0d08] mb-1">Email</label>
                     <input type="email" id="email" name="email" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre email">
                 </div>
 
@@ -87,13 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="mb-2">
                     <label for="password1" class="block text-sm font-medium text-[#0c0d08] mb-1">Mot de passe</label>
                     <input type="password" id="password1" name="password1" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre mot de passe">
                 </div>
                 <div class="mb-2">
                     <label for="password2" class="block text-sm font-medium text-[#0c0d08] mb-1">Mot de passe (Confirmation)</label>
                     <input type="password" id="password2" name="password2" required
-                        class="w-full px-4 py-2 border-0 border-b-2 border-[#ceed15] bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
+                        class="w-full px-4 py-2 border-0 border-b-2 bg-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-[#ceed15] text-[#0c0d08] border-[#b1caaa]"
                         placeholder="Entrer votre mot de passe">
                 </div>
 
