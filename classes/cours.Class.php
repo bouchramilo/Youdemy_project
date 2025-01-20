@@ -4,43 +4,46 @@ require_once "DataBase.Class.php";
 
 class Cours extends DataBase
 {
-
-    // fonction validerDonneesCours ***************************************************************************************************************************************************
-    public function validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo)
-    {
-        if (empty($titre) || empty($description) || empty($type) || empty($categorie) || empty($tags) || empty($photo)) {
-            return "Erreur : Les champs ne peuvent pas être vides !!!";
-        }
-
-        if (!filter_var($photo, FILTER_VALIDATE_URL)) {
-            return "Erreur : Le URL de la photo n'est pas valide !!!";
-        }
-
-        if (!preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ%&,.:;\'()]+$/u', $titre) || !preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ%&,.:;\'()]+$/u', $description)) {
-            return "Erreur : Les champs titre ou description est invalide !!!";
-        }
-
-        return true;
-    }
-
     // fonction ajouterCours ***************************************************************************************************************************************************
     protected function ajouterCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo) {}
 
     // fonction afficherCours ***************************************************************************************************************************************************
     protected function afficherCours() {}
 
+    // fonction validerDonneesCours ***************************************************************************************************************************************************
+    public function validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo)
+    {
+        if (empty($titre) || empty($description) || empty($type) || empty($categorie) || empty($tags) || empty($photo)) {
+            echo "<script>alert('Erreur : Tous les champs sont obligatoires !');</script>";
+            return false;
+        }
+
+        if (!filter_var($photo, FILTER_VALIDATE_URL)) {
+            echo "<script>alert('Erreur : L\'URL de la photo n\'est pas valide !');</script>";
+            return false;
+        }
+
+        if (
+            !preg_match('/^[\p{L}0-9\s%&,.:;\'()!?-]+$/u', $titre) ||
+            !preg_match('/^[\p{L}0-9\s%&,.:;\'()!?-]+$/u', $description)
+        ) {
+            echo "<script>alert('Erreur : Le titre ou la description contient des caractères non autorisés !');</script>";
+            return false;
+        }
+
+        return true;
+    }
+
+
     // fonction afficherCours ***************************************************************************************************************************************************
     public function modifierCours($id_cours, $titre, $description, $type, $contenu_cours, $categorie, $tags, $photo)
     {
         $pdo = $this->connect();
         try {
-            // Démarrage de la transaction
             $pdo->beginTransaction();
 
-            // Récupérer l'ancien type de contenu
             $old_type = $this->getType($id_cours);
 
-            // Cas où le type ne change pas
             if ($old_type === $type) {
                 if ($type === "Texte") {
                     $sql_update = "UPDATE cours SET 
@@ -51,20 +54,19 @@ class Cours extends DataBase
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([$titre, $description, $contenu_cours, $categorie, $photo, $id_cours]);
+                    $stmt_update->execute([htmlspecialchars($titre), htmlspecialchars($description), htmlspecialchars($contenu_cours), htmlspecialchars($categorie), htmlspecialchars($photo), htmlspecialchars($id_cours)]);
                 } elseif ($type === "Video") {
                     $sql_update = "UPDATE cours SET 
-                                titre = ?, 
+                                titre = ?), 
                                 description = ?, 
                                 contenu_video = ?, 
                                 id_categorie = ?, 
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([$titre, $description, $contenu_cours, $categorie, $photo, $id_cours]);
+                    $stmt_update->execute([htmlspecialchars($titre), $description, $contenu_cours, $categorie, $photo, $id_cours]);
                 }
             } else {
-                // Cas où le type change
                 if ($type === "Texte") {
                     $sql_update = "UPDATE cours SET 
                                 titre = ?, 
@@ -94,12 +96,10 @@ class Cours extends DataBase
                 }
             }
 
-            // Suppression des anciens tags liés au cours
             $sql_delete_tags = "DELETE FROM cours_tags WHERE id_cours = ?";
             $stmt_delete_tags = $pdo->prepare($sql_delete_tags);
             $stmt_delete_tags->execute([$id_cours]);
 
-            // Ajout des nouveaux tags, si disponibles
             if (!empty($tags)) {
                 $sql_insert_tags = "INSERT INTO cours_tags (id_cours, id_tag) VALUES (?, ?)";
                 $stmt_insert_tags = $pdo->prepare($sql_insert_tags);
@@ -108,17 +108,14 @@ class Cours extends DataBase
                 }
             }
 
-            // Validation de la transaction
             $pdo->commit();
             header("Location: E_details_cours.php");
             return "Le cours a été modifié avec succès.";
         } catch (Exception $e) {
-            // Annulation en cas d'erreur
             $pdo->rollBack();
             return "Erreur lors de la modification du cours : " . $e->getMessage();
         }
     }
-
 
     // fonction getType ***************************************************************************************************************************************************
     public function getType($id_cours)
@@ -134,7 +131,6 @@ class Cours extends DataBase
             return "Erreur : Lors de la récupérationle typr d'un cours !!! " . $e->getMessage();
         }
     }
-
 
     // fonction getAllMesCours ***************************************************************************************************************************************************
     public function getAllMesCours()
@@ -208,7 +204,6 @@ class Cours extends DataBase
         }
     }
 
-
     // fonction pour récupérer le nombre total de cours ***************************************************************************************************************************************************
     public function getTotalCours()
     {
@@ -223,8 +218,6 @@ class Cours extends DataBase
             return 0;
         }
     }
-
-
 
     // fonction getAllMesCours ***************************************************************************************************************************************************
     public function getAllCoursCategorie($categorie)
@@ -271,7 +264,6 @@ class Cours extends DataBase
         }
     }
 
-
     // fonction getCoursByTag ***************************************************************************************************************************************************
     public function getCoursByTagId($id_tag)
     {
@@ -312,8 +304,7 @@ class Cours extends DataBase
         }
     }
 
-
-
+    // fonction getCoursByTag ***************************************************************************************************************************************************
     function searchCoursByTitle($searchTitle)
     {
         $pdo = $this->connect();

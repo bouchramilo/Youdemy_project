@@ -2,6 +2,7 @@
 
 require_once "DataBase.Class.php";
 require_once "inscription_cours.Class.php";
+require_once "utilisateur.Class.php";
 require_once "cours.Class.php";
 
 class Utilisateur extends DataBase
@@ -90,6 +91,35 @@ class Utilisateur extends DataBase
         header("Location: login.php");
     }
 
+    // fonction getStatus ***************************************************************************************************************************************************
+    public function getStatus()
+    {
+        $pdo = $this->connect();
+        try {
+            $sql_check_status = "SELECT status FROM utilisateurs WHERE id_user = :id_user";
+            $stmt_check_status = $pdo->prepare($sql_check_status);
+            $stmt_check_status->execute([':id_user' => $_SESSION['id_utilisateur']]);
+            $rslt = $stmt_check_status->fetch(PDO::FETCH_ASSOC);
+            return $rslt['status'];
+        } catch (Exception $e) {
+            return "Erreur : Lors la vérification de status de usre !!! " . $e->getMessage();
+        }
+    }
+    // fonction isValide ***************************************************************************************************************************************************
+    public function isValide($id_user)
+    {
+        $pdo = $this->connect();
+        try {
+            $sql_check_valid = "SELECT estValide FROM enseignants WHERE id_user = :id_user";
+            $stmt_check_valide = $pdo->prepare($sql_check_valid);
+            $stmt_check_valide->execute([':id_user' => $id_user]);
+            $rslt = $stmt_check_valide->fetch(PDO::FETCH_ASSOC);
+            return $rslt['estValide'];
+        } catch (Exception $e) {
+            return "Erreur : Lors la vérification de la validation de compte d'enseignant !!! " . $e->getMessage();
+        }
+    }
+
 
     // fonction login ***************************************************************************************************************************************************
     public function login($email, $motDePasse)
@@ -110,12 +140,10 @@ class Utilisateur extends DataBase
                         break;
                     case "Enseignant": {
                             try {
-                                $sql_check_valid = "SELECT estValide FROM enseignants WHERE id_user = :id_user";
-                                $stmt_check_valide = $pdo->prepare($sql_check_valid);
-                                $stmt_check_valide->execute([':id_user' => $user['id_user']]);
-                                $rslt = $stmt_check_valide->fetch(PDO::FETCH_ASSOC);
 
-                                if ($rslt['estValide'] === 1) {
+                                $rslt = $this->isValide($user['id_user']);
+
+                                if ($rslt === 1) {
                                     header("Location: dashboard_enseignant.php");
                                     exit;
                                 } else {
@@ -214,6 +242,7 @@ class Utilisateur extends DataBase
     {
         $coursInscrire = new InscriptionCours();
         $course = new Cours();
+        $utlstr = new Utilisateur();
         $pdo = $this->connect();
 
         if ($this->getRole() === "Etudiant") {
@@ -235,14 +264,13 @@ class Utilisateur extends DataBase
                             </div>
 
                             <div class="flex gap-4 max-sm:flex-col mt-8 h-18 ">
-                                <button type="button" onclick="closeModal()"
+                                <button type="button" onclick="closeModal()" 
                                     class="h-full px-4 py-2 rounded-lg text-gray-800 text-sm tracking-wide border-none outline-none bg-gray-200 hover:bg-gray-300">No,
                                     Annuler
                                 </button>
                                 <form action="" method="post" class=" ">
-                                    <button name="confirm_inscrire" value="' . $id_cours . '"
-                                        class="h-full w-full px-5 py-2.5 rounded-lg text-white text-sm tracking-wide border-none outline-none bg-[#386641] hover:bg-[#497752]">
-                                        Oui, confirmer ' . $id_cours . '
+                                    <button name="confirm_inscrire" value="' . $id_cours . '" ' . ($utlstr->getStatus() === "Suspendu" ? 'disabled' : '') . ' class="h-full w-full px-5 py-2.5 rounded-lg text-white text-sm tracking-wide border-none outline-none bg-[#386641] hover:bg-[#497752]">
+                                        Oui, confirmer
                                     </button>
                                 </form>
                             </div>

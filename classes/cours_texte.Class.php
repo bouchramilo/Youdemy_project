@@ -13,10 +13,10 @@ class CoursText extends Cours
     {
         $pdo = $this->connect();
 
-        // $validationResult = parent::validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo);
-        // if ($validationResult !== true) {
-        //     return $validationResult;
-        // }
+        $validationResult = parent::validerDonneesCours($titre, $description, $type, $contenu_cours, $categorie, $tags, $photo);
+        if ($validationResult !== true) {
+            return $validationResult;
+        }
 
         try {
             $pdo->beginTransaction();

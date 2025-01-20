@@ -1,8 +1,10 @@
 <?php
 
 require_once "classes/inscription_cours.Class.php";
+require_once "classes/utilisateur.Class.php";
 
 $inscrireCours = new InscriptionCours();
+$utlstr = new Utilisateur();
 
 $mesCours = $inscrireCours->mesCours();
 
@@ -71,7 +73,7 @@ if (isset($_POST['delete_from_mes_cours'])) {
                                     </div>
                                     <div class="w-full flex flex-row justify-between h-max">
                                         <form action="" method="post" class="w-full text-start">
-                                            <button class="" title="Delete" name="delete_from_mes_cours" value="<?php echo $CRS['id_cours']; ?>">
+                                            <button class="" title="Delete" name="delete_from_mes_cours" value="<?php echo $CRS['id_cours']; ?>" <?php if($utlstr->getStatus() === "Suspendu"){ echo "disabled";} ?>>
 
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                                                     <path

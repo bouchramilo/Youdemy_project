@@ -1,5 +1,6 @@
 <?php
 
+require_once "classes/utilisateur.Class.php";
 require_once "classes/cours.Class.php";
 require_once "classes/tag.Class.php";
 require_once "classes/categorie.Class.php";
@@ -7,6 +8,7 @@ require_once "classes/cours_texte.Class.php";
 require_once "classes/cours_video.Class.php";
 require_once "classes/inscription_cours.Class.php";
 
+$utilstr = new Utilisateur();
 $inscrireCours = new InscriptionCours();
 $course = new Cours();
 $categorie = new Categorie();
@@ -129,7 +131,7 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
                                 <td class="py-2 sm:py-4 flex space-x-3 justify-center">
                                     <form action="" method="post" class="">
                                         <input type="hidden" name="id_etudiant" value="<?php echo $CRS['id_user'] ?>">
-                                        <button name="delete_from_inscription" class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>">
+                                        <button name="delete_from_inscription" class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                                                 <path
                                                     d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"

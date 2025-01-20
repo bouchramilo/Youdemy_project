@@ -40,7 +40,7 @@ switch ($_SESSION['type_cours']) {
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
 
-    <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center bg-gray-100 shadow-md">
+    <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center shadow-md">
         <div class="text-4xl font-semibold text-gray-800"><?php echo $cours_actuel['titre']; ?></div>
     </section>
 
@@ -61,8 +61,8 @@ switch ($_SESSION['type_cours']) {
                 </iframe>
                 
                 <?php elseif ($_SESSION['type_cours'] === "Texte") : ?>
-                    <p class="p-10 ">
-                        <?php echo $cours_actuel['content']; ?>
+                    <p class="p-10 max-sm:p-4">
+                        <?php echo nl2br(htmlspecialchars($cours_actuel['content'])); ?>
                     </p>
                     <?php endif; ?>
                 </div>

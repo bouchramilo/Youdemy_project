@@ -1,5 +1,6 @@
 <?php
 
+require_once "classes/utilisateur.Class.php";
 require_once "classes/cours.Class.php";
 require_once "classes/tag.Class.php";
 require_once "classes/categorie.Class.php";
@@ -51,6 +52,9 @@ if (isset($_POST['details_cours'])) {
     header("Location: E_details_cours.php");
 }
 
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+$utilstr = new Utilisateur();
+
 ?>
 
 
@@ -84,7 +88,7 @@ if (isset($_POST['details_cours'])) {
         </div>
         <div class="flex max-sm:flex-col sm:flex-col md:flex-row max-sm:text-xs gap-4">
             <form action="" method="post">
-                <button type="button"
+                <button type="button" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>
                     class="addCours bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">&#10010; | Ajouter
                 </button>
             </form>
@@ -100,10 +104,10 @@ if (isset($_POST['details_cours'])) {
                 <?php foreach ($mesCours as $courss): ?>
 
                     <div class="flex max-lg:flex-col bg-[#daeadd] cursor-pointer rounded overflow-hidden shadow-xl hover:scale-[1.03] transition-all duration-300">
-                        <div class="h-64 lg:w-full">
+                        <div class="h-64 lg:w-1/2 w-full">
                             <img src="<?php echo $courss['photo']; ?>" alt="Blog Post 1" class="w-full h-full object-cover" />
                         </div>
-                        <div class="p-6">
+                        <div class="p-6 lg:w-1/2  w-full">
                             <form action="" method="post">
                                 <input type="hidden" name="type_cours" value="<?php echo $courss['type_contenu'] ?>">
                                 <button name="details_cours" value="<?php echo $courss['id_cours'] ?>" class="text-[#faa307] hover:underline mt-4 block text-xl font-semibold">
@@ -113,7 +117,7 @@ if (isset($_POST['details_cours'])) {
                             <span class="text-sm block text-gray-400 mt-2"><?php echo $courss['date_de_creation']; ?> | <?php echo $courss['type_contenu']; ?></span>
                             <p class="text-sm text-gray-500 mt-4"><?php echo $courss['description']; ?></p>
                             <form action="" method="post" class="w-full text-end mt-2">
-                                <button class="" title="Delete" name="btn_delete_cours" value="<?php echo $courss['id_cours']; ?>">
+                                <button class="" title="Delete" name="btn_delete_cours" value="<?php echo $courss['id_cours']; ?>" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
                                         <path

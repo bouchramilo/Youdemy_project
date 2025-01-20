@@ -12,7 +12,6 @@ $tags = $tag->getAllTags();
 
 if (isset($_POST['btn_addTag'])) {
     $tag_result = $tag->addTag($_POST['input_addTag']);
-    header("Location: tags_categories.php");
 }
 
 if (isset($_POST['btn_update_tag'])) {

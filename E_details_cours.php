@@ -1,5 +1,6 @@
 <?php
 
+require_once "classes/utilisateur.Class.php";
 require_once "classes/cours.Class.php";
 require_once "classes/tag.Class.php";
 require_once "classes/categorie.Class.php";
@@ -7,6 +8,7 @@ require_once "classes/cours_texte.Class.php";
 require_once "classes/cours_video.Class.php";
 require_once "classes/tags_cours.Class.php";
 
+$utilstr = new Utilisateur();
 
 // affichage de tag , affichage de categorie ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -93,7 +95,7 @@ if (isset($_POST['btn_update_cours'])) {
     <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max  justify-between items-center shadow-md">
         <div class="text-4xl font-semibold text-gray-800"><?php echo $cours_actuel['titre']; ?></div>
         <div class="flex max-sm:flex-col sm:flex-col md:flex-row max-sm:text-xs gap-4">
-            <button type="button"
+            <button type="button" <?php if($utilstr->getStatus() === "Suspendu"){ echo 'disabled';} ?>
                 class=" updateCours flex gap-2  bg-yellow-400 hover:bg-yellow-500 transition-colors duration-300 text-white px-6 py-2 rounded shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-white hover:fill-white"
                     viewBox="0 0 348.882 348.882">
@@ -127,7 +129,7 @@ if (isset($_POST['btn_update_cours'])) {
 
                 <?php elseif ($_SESSION['type_cours'] === "Texte") : ?>
                     <p class="p-10 ">
-                        <?php echo $cours_actuel['content']; ?>
+                        <?php echo nl2br(htmlspecialchars($cours_actuel['content'])); ?>
                     </p>
                 <?php endif; ?>
             </div>

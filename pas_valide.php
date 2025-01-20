@@ -23,19 +23,14 @@
     <?php include "header.php"; ?>
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
 
+    <section class="w-full min-h-screen bg-gradient-to-b from-gray-100 via-gray-200 to-gray-300 flex flex-col justify-center items-center gap-8">
+        <p class="text-4xl font-semibold text-center text-gray-800 bg-white shadow-lg p-6 lg:px-20 rounded-md border border-gray-300">
+            Votre compte est en attente de validation. Veuillez patienter ou contacter l'administrateur.
+        </p>
+    </section>
 
-
-
-<section class="w-full min-h-screen bg-red-500 flex flex-col justify-center items-center gap-6">
-
-<p class="text-5xl text-white">Votre compte pas encore valider !</p>
-
-</section>
-
-
-
-        <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
-        <?php include "footer.php"; ?>
+    <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
+    <?php include "footer.php"; ?>
     <!-- Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer  Footer -->
 
 

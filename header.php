@@ -8,6 +8,14 @@ if (isset($_POST['deconnecter'])) {
     $userr->logout();
 }
 
+if (isset($_SESSION['id_utilisateur']) && $role === "Enseignant") {
+
+    if ($userr->isValide($_SESSION['id_utilisateur']) === 1) {
+        $isVlaide = True;
+    } else {
+        $isVlaide = false;
+    }
+}
 
 ?>
 
@@ -32,9 +40,21 @@ if (isset($_POST['deconnecter'])) {
                     <li><a href="mes_cours.php" class="hover:text-[#f48c06]">Mes Cours</a></li>
 
                 <?php elseif ($role === "Enseignant") : ?>
-                    <li><a href="dashboard_enseignant.php" class="hover:text-[#f48c06]">Mes Cours</a></li>
-                    <li><a href="inscription_cours.php" class="hover:text-[#f48c06]">Inscriptions</a></li>
-                    <li><a href="statistique_enseignant.php" class="hover:text-[#f48c06]">Statistique</a></li>
+                    <li><a href="<?php if ($isVlaide) {
+                                        echo 'dashboard_enseignant.php';
+                                    } else {
+                                        echo '#';
+                                    } ?>" class="hover:text-[#f48c06]">Mes Cours</a></li>
+                    <li><a href="<?php if ($isVlaide) {
+                                        echo 'inscription_cours.php';
+                                    } else {
+                                        echo '#';
+                                    } ?>" class="hover:text-[#f48c06]">Inscriptions</a></li>
+                    <li><a href="<?php if ($isVlaide) {
+                                        echo 'statistique_enseignant.php';
+                                    } else {
+                                        echo '#';
+                                    } ?>" class="hover:text-[#f48c06]">Statistique</a></li>
                 <?php endif; ?>
             </ul>
 
@@ -65,9 +85,21 @@ if (isset($_POST['deconnecter'])) {
             <?php elseif ($role === "Etudiant") : ?>
                 <li><a href="mes_cours.php" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>
             <?php elseif ($role === "Enseignant") : ?>
-                <li><a href="dashboard_enseignant.php" class="block text-white hover:text-[#f48c06]">Gestion des Cours</a></li>
-                <li><a href="inscription_cours.php" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>
-                <li><a href="statistique_enseignant.php" class="block text-white hover:text-[#f48c06]">Statistique</a></li>
+                <li><a href="<?php if ($isVlaide) {
+                                    echo 'dashboard_enseignant.php';
+                                } else {
+                                    echo '#';
+                                } ?>" class="block text-white hover:text-[#f48c06]">Mes Cours</a></li>
+                <li><a href="<?php if ($isVlaide) {
+                                    echo 'inscription_cours.php';
+                                } else {
+                                    echo '#';
+                                } ?>" class="block text-white hover:text-[#f48c06]">Inscriptions</a></li>
+                <li><a href="<?php if ($isVlaide) {
+                                    echo 'statistique_enseignant.php';
+                                } else {
+                                    echo '#';
+                                } ?>" class="block text-white hover:text-[#f48c06]">Statistique</a></li>
             <?php endif; ?>
 
             <?php if (isset($_SESSION["id_utilisateur"])) : ?>

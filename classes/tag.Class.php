@@ -10,19 +10,28 @@ class Tag extends DataBase
     public function addTag($nom_tag)
     {
         try {
-            if (!preg_match('/^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/u', $nom_tag)) {
-                return "Le tag doit contenir seulement les lettres.";
+            if (!preg_match('/^[\p{L},\s]+$/u', $nom_tag)) {
+                return "Le tag doit contenir uniquement des lettres et des virgules pour séparer les tags.";
             }
 
             $pdo = $this->connect();
-            $sql_add = "INSERT INTO tags (nom_tag) VALUES (:nom_tag)";
-            $stmt_add = $pdo->prepare($sql_add);
-            $stmt_add->execute([':nom_tag' => $nom_tag]);
-            return;
+
+            $name_tags = trim($nom_tag);
+            $tags = array_map('trim', explode(',', $name_tags));
+
+            foreach ($tags as $tag) {
+                if (!empty($tag)) {
+                    $sql_add = "INSERT INTO tags (nom_tag) VALUES (:nom_tag)";
+                    $stmt_add = $pdo->prepare($sql_add);
+                    $stmt_add->execute([':nom_tag' => $tag]);
+                }
+            }
+            header("Location: tags_categories.php");
         } catch (Exception $e) {
-            return "Erreur : Lors de l'ajout de Tag !!! " . $e->getMessage();
+            echo "Erreur : Lors de l'ajout des tags ! " . $e->getMessage();
         }
     }
+
 
     // fonction deleteTag() ***************************************************************************************************************************************************
     public function deleteTag($id_tag)
