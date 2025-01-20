@@ -65,7 +65,7 @@ if (isset($_POST['btn_deleteCategorie'])) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-[#fff] text-[#14120b] ">
+<body class="bg-[#fff] w-full h-full text-[#14120b] ">
 
     <!-- header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header  header header header header header -->
     <?php include "header.php"; ?>
@@ -73,21 +73,21 @@ if (isset($_POST['btn_deleteCategorie'])) {
 
     <!-- ********************************************************************************************************************************************************************** -->
 
-    <section class="p-6 ">
-        <div class="flex gap-4">
-            <img src="images/icons/tagC.png" alt="" class="h-16 w-16">
-            <p class="text-5xl font-bold ">Tags & Catégories</p>
+    <section class="  ">
+        <div class="flex gap-4 p-2">
+            <img src="images/icons/tagC.png" alt="" class="h-16 w-16 max-sm:h-12 max-sm:w-12 md:h-14 md:w-14">
+            <p class="lg:text-5xl font-bold max-sm:text-2xl md:text-4xl   ">Tags & Catégories</p>
         </div>
     </section>
-    <section class="w-full min-h-screen grid grid-cols-2 p-2 gap-2 ">
+    <section class="w-full min-h-screen grid lg:grid-cols-2 max-sm:grid-cols-1 md:grid-cols-1 sm:p-0 md:p-1 max-md:p-1 max-sm:p-1 p-2 gap-2 max-sm:text-sm ">
         <!-- tags ************************************************************************************************************************************************************************************* -->
         <section class="w-full h-full ">
-            <div class="w-full h-20 flex flex-col p-1">
+            <div class="w-full h-20 flex flex-col p-1 ">
                 <p class="text-red-500 text-sm"><?php echo $tag_result; ?></p>
-                <form action="" method="post" class="flex gap-2 h-12 w-full ">
-                    <input name="input_addTag" type="text" placeholder="Entrez tag ... " class="w-3/4 h-full flex px-4 py-3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden mx-auto font-[sans-serif]">
+                <form action="" method="post" class="flex gap-2 h-12 w-full max-sm:gap-1 max-md:gap-1 md:gap-1  ">
+                    <input name="input_addTag" type="text" placeholder="Entrez tag ... " class="w-3/4 max-sm:w-3/5 h-full flex px-4 py-3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden mx-auto font-[sans-serif]">
                     <button name="btn_addTag"
-                        class="w-1/4 bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">Ajouter
+                        class="w-1/4 max-sm:w-2/5 bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 max-sm:px-1 rounded">Ajouter
                         | &#10010;
                     </button>
                 </form>
@@ -158,10 +158,10 @@ if (isset($_POST['btn_deleteCategorie'])) {
         <section class="w-full h-full ">
             <div class="w-full h-20 flex flex-col p-1">
                 <p class="text-red-500 text-sm"><?php echo $categorie_result; ?></p>
-                <form action="" method="post" class="flex gap-2 h-12 w-full ">
-                    <input name="input_addCategorie" type="text" placeholder="Entrez tag ... " class="w-3/4 h-full flex px-4 py-3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden mx-auto font-[sans-serif]">
+                <form action="" method="post" class="flex gap-2 h-12 w-full max-sm:gap-1 max-md:gap-1 md:gap-1  ">
+                    <input name="input_addCategorie" type="text" placeholder="Entrez catégorie ... " class="w-3/4 h-full flex px-4 py-3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden mx-auto font-[sans-serif]">
                     <button name="btn_addCategorie"
-                        class="w-1/4 bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">Ajouter
+                        class="w-1/4 max-sm:w-2/5 bg-[#ffba08] hover:bg-[#f48c06] transition-colors duration-300 text-white px-4 py-2 rounded">Ajouter
                         | &#10010;</button>
                 </form>
             </div>

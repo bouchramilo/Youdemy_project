@@ -93,7 +93,7 @@ $tags = $tagg->getAllTags();
 
                 <!-- Search Form Section -->
                 <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
-                    <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+                    <div class="flex px-4 py-3 w-2/3 max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
                         <input id="search" type="text" name="search_title" placeholder="Rechercher par titre de cours ..."
                             class="w-full outline-none bg-transparent text-gray-600 text-sm" />
                         <button name="search_cours_title">
@@ -116,8 +116,8 @@ $tags = $tagg->getAllTags();
 
         <div id="catalogue" class="bg-white font-sans">
             <section class="w-full h-max px-10 py-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max items-center bg-gray-100 shadow-md">
-                <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
-                    <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+                <form action="" method="post" class="md:gap-2 flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
+                    <div class="flex px-4 py-3 w-full max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
                         <select type="email" placeholder="Search Something..." name="nom_tag"
                             class="w-full outline-none bg-transparent text-gray-600 text-sm">
                             <option value="" class="bg-gray-300">--Tag--</option>
@@ -137,8 +137,8 @@ $tags = $tagg->getAllTags();
                     </div>
 
                 </form>
-                <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
-                    <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+                <form action="" method="post" class="md:gap-2 flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
+                    <div class="flex px-4 py-3 w-full max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
                         <select type="email" placeholder="Search Something..." name="title_categorie"
                             class="w-full outline-none bg-transparent text-gray-600 text-sm">
                             <option value="" class="bg-gray-300">--Catégorie--</option>

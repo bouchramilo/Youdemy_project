@@ -48,15 +48,15 @@ echo '<script> const chartData = ' . json_encode($data) . ';</script>';
 
 
 
-    <div class="w-full bg-gray-100 py-10 px-6 md:px-8 lg:px-16">
+    <div class="w-full min-h-screen h-max bg-gray-100 py-10 px-6 md:px-8 lg:px-16">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <!-- Nombre d'étudiants inscrits -->
             <div class="flex flex-col sm:flex-row items-center justify-between p-6 bg-green-500 text-white rounded-lg shadow-md">
                 <div class="text-center sm:text-left flex gap-4">
-                    <img src="images/icons/ecrire.png" alt="Nombre d'étudiants" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
+                    <img src="images/icons/ecrire.png" alt="Nombre d'étudiants" class="w-32 h-32 max-sm:w-16 max-sm:h-16 mx-auto sm:mx-0 mb-4">
                     <div class="flex flex-col gap-4 ">
                         <h3 class="text-xl sm:text-2xl font-semibold">Étudiants inscrits</h3>
-                        <p class="mt-2 text-lg"><?php echo $NbrinscriptionCours; ?> étudiants</p>
+                        <p class="mt-2 text-lg max-sm:text-md"><?php echo $NbrinscriptionCours; ?> étudiants</p>
                     </div>
                 </div>
             </div>
@@ -64,22 +64,22 @@ echo '<script> const chartData = ' . json_encode($data) . ';</script>';
             <!-- Nombre de cours -->
             <div class="flex flex-col sm:flex-row items-center justify-between p-6 bg-blue-500 text-white rounded-lg shadow-md">
                 <div class="text-center sm:text-left flex gap-4">
-                    <img src="images/icons/livre.png" alt="Nombre de cours" class="w-32 h-32 mx-auto sm:mx-0 mb-4">
+                    <img src="images/icons/livre.png" alt="Nombre de cours" class="w-32 h-32 max-sm:w-16 max-sm:h-16 mx-auto sm:mx-0 mb-4">
                     <div class="flex flex-col gap-4 ">
                         <h3 class="text-xl sm:text-2xl font-semibold">Mes cours</h3>
-                        <p class="mt-2 text-lg"><?php echo $nbrMerCours; ?> cours</p>
+                        <p class="mt-2 text-lg max-sm:text-md"><?php echo $nbrMerCours; ?> cours</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- graphique des inscriptions -->
-        <div class="mt-8">
-            <div class="bg-white p-6 md:p-8 rounded-lg shadow-md">
+        <div class="mt-8  ">
+            <div class="bg-white h-full p-6 md:p-8 rounded-lg shadow-md">
                 <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center sm:text-left">
                     Inscriptions par cours
                 </h2>
-                <canvas id="inscriptionsChart" class="w-full h-[300px] sm:h-[400px]"></canvas>
+                <canvas id="inscriptionsChart" class="w-full "></canvas>
             </div>
         </div>
     </div>

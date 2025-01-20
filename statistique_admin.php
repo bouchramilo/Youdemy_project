@@ -42,8 +42,10 @@ $topEnseignants = $admin->getTop3Enseignants();
 
 
 
+    <div class="text-center py-6">
+        <h2 class="text-3xl font-extrabold text-gray-800 inline-block relative after:absolute after:w-4/6 after:h-1 after:left-0 after:right-0 after:-bottom-4 after:mx-auto after:bg-[#386641] after:rounded-lg-full">Statistiques globales</h2>
+    </div>
     <div class="stats-container min-h-screen max-w-7xl max-lg:max-w-3xl max-md:max-w-sm mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-
         <!-- Nombre total de cours *************************************************************************************************************************************************** -->
         <div class="stat-card shadow-md rounded-lg p-6 flex flex-col justify-center bg-gray-100">
             <h2 class="text-xl font-semibold text-gray-700">Nombre total de cours</h2>

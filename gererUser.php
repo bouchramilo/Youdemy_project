@@ -56,29 +56,29 @@ if (isset($_POST['status_update'])) {
 
     <section class="p-6 ">
         <div class="flex gap-4">
-            <img src="images/icons/group.png" alt="" class="h-16 w-16">
-            <p class="text-5xl font-bold ">Les utilisateurs</p>
+            <img src="images/icons/group.png" alt="" class="h-16 w-16 max-sm:h-12 max-sm:w-12">
+            <p class="text-5xl font-bold max-sm:text-3xl">Les utilisateurs</p>
         </div>
     </section>
-    <section class="w-full min-h-screen p-6 ">
+    <section class="w-full min-h-screen max-sm:p-0 p-6 max-sm:text-xs max-sm:w-full ">
         <div class="font-[sans-serif] overflow-x-auto">
             <table class="min-w-full">
                 <thead class="bg-[#386641] text-white whitespace-nowrap">
                     <tr>
 
-                        <th class="p-4 text-left text-sm font-semibold">
+                        <th class="p-4 text-left text-sm max-sm:text-xs font-semibold">
                             Name
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold">
+                        <th class="p-4 text-left text-sm max-sm:text-xs font-semibold">
                             Role
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold">
+                        <th class="p-4 text-left text-sm max-sm:text-xs font-semibold">
                             valide
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold">
+                        <th class="p-4 text-left text-sm max-sm:text-xs font-semibold">
                             Status
                         </th>
-                        <th class="p-4 text-left text-sm font-semibold">
+                        <th class="p-4 text-left text-sm max-sm:text-xs font-semibold">
                             Action
                         </th>
                     </tr>
@@ -89,50 +89,50 @@ if (isset($_POST['status_update'])) {
                     <?php foreach ($allUsers as $user): ?>
                         <tr class="border-b-2 border-[#386641] bg-[#daeadd]">
 
-                            <td class="p-4 text-sm">
+                            <td class="p-4 text-sm max-sm:text-xs">
                                 <div class="flex items-center cursor-pointer w-max">
-                                    <img src='<?php echo $user['photo']; ?>' class="w-9 h-9 rounded-full shrink-0" />
+                                    <img src='<?php echo $user['photo']; ?>' class="w-9 h-9 max-sm:w-6 max-sm:h-6 rounded-full shrink-0" />
                                     <div class="ml-4">
-                                        <p class="text-sm text-black"><?php echo $user['nom'] . ' ' . $user['prenom']; ?></p>
-                                        <p class="text-xs text-gray-500 mt-0.5"><?php echo $user['email']; ?></p>
+                                        <p class="text-sm max-sm:text-xs text-black"><?php echo $user['nom'] . ' ' . $user['prenom']; ?></p>
+                                        <p class="text-xs max-sm:text-[10px] text-gray-500 mt-0.5"><?php echo $user['email']; ?></p>
                                     </div>
                                 </div>
                             </td>
-                            <td class="p-4 text-sm text-black">
+                            <td class="p-4 text-sm max-sm:text-xs text-black">
                                 <?php echo $user['role']; ?>
                             </td>
-                            <td class="p-4">
+                            <td class="p-4 text-sm max-sm:text-xs">
                                 <?php if ($user['role'] === 'Etudiant' || $user['role'] === 'Admin'): ?>
                                     <!-- <form action="" method="post"> -->
-                                    <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] opacity-50 rounded-md text-sm ">invalider
+                                    <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] opacity-50 rounded-md ">invalider
                                         <!-- </form> -->
                                     <?php else: ?>
 
                                         <?php if ($user['estValide'] === 1): ?>
                                             <form action="" method="post">
-                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] rounded-md text-sm ">invalider
+                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-[#f48c06] rounded-md ">invalider
                                             </form>
                                         <?php elseif ($user['estValide'] === 0): ?>
                                             <form action="" method="post">
-                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-gray-300 rounded-md text-sm ">valider
+                                                <button name="cptIsValide" value="<?php echo $user['id_user']; ?>" class="w-20 h-7 p-1 flex items-center justify-center bg-gray-300 rounded-md ">valider
                                             </form>
                                         <?php endif; ?>
 
                                     <?php endif; ?>
                             </td>
-                            <td class="p-4 text-sm text-gray-800">
+                            <td class="p-4 text-sm max-sm:text-xs text-gray-800">
                                 <?php if ($user['status'] === 'Activer'): ?>
                                     <button
-                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
+                                        class="w-[68px] block text-center py-1 border border-green-500 text-green-600 rounded" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
                                         <?php if ($user['role'] === 'Admin') {
                                             echo 'disabled';
                                         } ?>>
                                         <?php echo $user['status']; ?>
                                     </button>
-                                
+
                                 <?php elseif ($user['status'] === 'Suspendu'): ?>
                                     <button
-                                        class="w-[68px] block text-center py-1 border border-yellow-500 text-yellow-600 rounded text-xs" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
+                                        class="w-[68px] block text-center py-1 border border-yellow-500 text-yellow-600 rounded" onclick="editStatus(<?php echo $user['id_user']; ?>, '<?php echo $user['status']; ?>')"
                                         <?php if ($user['role'] === 'Admin') {
                                             echo 'disabled';
                                         } ?>>

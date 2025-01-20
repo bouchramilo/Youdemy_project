@@ -24,7 +24,7 @@ switch ($_SESSION['type_cours']) {
 $tagCours = new TagsCours();
 $tagsCours = $tagCours->allTagsForCours($_SESSION['id_cours']);
 
-// pour la forme de update +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// tags et catégories pour la forme de update +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $tag = new Tag();
 $categorie = new Categorie();
 $tags = $tag->getAllTags();
@@ -68,13 +68,7 @@ if (isset($_POST['btn_update_cours'])) {
     }
 }
 
-
-
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -86,7 +80,6 @@ if (isset($_POST['btn_update_cours'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
-
     <title>Youdemy - E : Cours</title>
 </head>
 
@@ -119,8 +112,7 @@ if (isset($_POST['btn_update_cours'])) {
     <section class="min-h-screen w-full bg-gray-50 p-6">
         <section class="flex flex-col sm:flex-row gap-6 w-full bg-white shadow-lg rounded-lg overflow-hidden">
             <!-- Section principale -->
-            <div class="w-full sm:w-8/12 flex flex-col gap-6">
-                <img src="<?php echo $cours_actuel['photo']; ?>" alt="images de cours" class="h-72 w-full object-cover rounded-t-lg sm:rounded-none">
+            <div class="w-full sm:w-8/12 flex flex-col gap-6 min-h-screen">
 
 
                 <?php if ($_SESSION['type_cours'] === "Video") : ?>
@@ -141,14 +133,15 @@ if (isset($_POST['btn_update_cours'])) {
             </div>
 
             <!-- Section des informations sur le cours -->
-            <div class="w-full sm:w-4/12 flex flex-col gap-4 items-center bg-gray-50 p-4 border-l-2 border-yellow-400">
+            <div class="w-full sm:w-4/12 flex flex-col gap-4 items-center bg-gray-50 p-4 ">
+                <img src="<?php echo $cours_actuel['photo']; ?>" alt="images de cours" class="h-72 w-full object-cover rounded-t-lg sm:rounded-none">
                 <div class="w-full border border-yellow-400 rounded-lg p-4 text-gray-700">
-                    <p class="text-lg font-semibold">Auteur : <span class="font-normal"><?php echo $cours_actuel['full_name']; ?></span></p>
-                    <p class="text-lg font-semibold">Catégorie : <span class="font-normal"><?php echo $cours_actuel['titre_categorie']; ?></span></p>
-                    <p class="text-lg font-semibold">Description : <span class="font-normal"><?php echo $cours_actuel['description']; ?></span></p>
-                    <p class="text-lg font-semibold">Date de création : <span class="font-normal"><?php echo $cours_actuel['date_de_creation']; ?></span></p>
-                    <p class="text-lg font-semibold">Tags :</p>
-                    <ul class="list-disc ml-10 text-gray-600">
+                    <p class="text-md max-sm:text-sm font-semibold">Auteur : <span class="font-normal"><?php echo $cours_actuel['full_name']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Catégorie : <span class="font-normal"><?php echo $cours_actuel['titre_categorie']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Description : <span class="font-normal"><?php echo $cours_actuel['description']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Date de création : <span class="font-normal"><?php echo $cours_actuel['date_de_creation']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Tags :</p>
+                    <ul class="list-disc text-md max-sm:text-sm ml-10 text-gray-600">
                         <?php foreach ($tagsCours as $TC): ?>
                             <li><?php echo $TC['nom_tag']; ?></li>
                         <?php endforeach; ?>
@@ -252,7 +245,7 @@ if (isset($_POST['btn_update_cours'])) {
                     <button type="button"
                         class="closeU px-6 py-3 rounded-lg text-gray-800 text-sm border-none outline-none tracking-wide bg-gray-200 hover:bg-gray-300">Annuler</button>
                     <button type="submit" name="btn_update_cours" value="<?= $cours_actuel['id_cours'] ?>"
-                        class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-[#386641] hover:bg-[#277752]">Modifier <?php echo $cours_actuel['id_cours'] ?></button>
+                        class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-[#386641] hover:bg-[#277752]">Modifier</button>
                 </div>
             </form>
         </div>
@@ -293,7 +286,7 @@ if (isset($_POST['btn_update_cours'])) {
     </script>
 
     <script>
-        new MultiSelectTag("tags_update"); 
+        new MultiSelectTag("tags_update");
     </script>
 
 </body>

@@ -27,7 +27,7 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
         $mesInscriCours = $inscrireCours->searchByCours($_POST['title_cours']);
     } elseif (isset($_POST['search_categorie']) && !empty($_POST['title_categorie'])) {
         $mesInscriCours = $inscrireCours->searchByCategorie($_POST['title_categorie']);
-    }else{
+    } else {
         header("Location: inscription_cours.php");
     }
 }
@@ -59,9 +59,9 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
 
     <section class="w-full h-20 px-10 pt-6 flex  max-sm:flex-col-reverse  max-sm:h-max md:h-max items-center bg-gray-100 shadow-md">
         <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
-            <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+            <div class="flex px-4 py-3 w-2/3 max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
                 <select type="email" placeholder="Search Something..." name="title_cours"
-                    class="w-full outline-none bg-transparent text-gray-600 text-sm">
+                    class="w-full outline-none bg-transparent text-gray-600 text-sm max-sm:text-xs">
                     <option value="">Cours</option>
                     <?php foreach ($mesCours as $courss): ?>
                         <option value="<?php echo $courss['id_cours']; ?>"><?php echo $courss['titre']; ?></option>
@@ -80,9 +80,9 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
 
         </form>
         <form action="" method="post" class=" flex w-full h-12 justify-center mt-4 rounded-lg overflow-hidden">
-            <div class="flex px-4 py-3 w-2/3 rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
+            <div class="flex px-4 py-3 w-2/3 max-sm:w-full rounded-md border-2 border-[#386641] bg-[#daeadd] overflow-hidden max-w-md mx-auto font-[sans-serif]">
                 <select type="email" placeholder="Search Something..." name="title_categorie"
-                    class="w-full outline-none bg-transparent text-gray-600 text-sm">
+                    class="w-full outline-none bg-transparent text-gray-600 text-sm max-sm:text-xs">
                     <option value="">Catégorie</option>
                     <?php foreach ($categories as $categ): ?>
                         <option value="<?php echo $categ['id_categorie']; ?>"><?php echo $categ['titre_categorie']; ?></option>
@@ -106,8 +106,8 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
 
 
     <section class="min-h-screen w-full py-10 max-sm:py-10  bg-gray-100">
-        <div class="px-10 pb-6 text-4xl font-semibold text-gray-800">Les inscription de mes cours : </div>
-        <div class="overflow-x-auto font-[sans-serif] shadow-md rounded-lg lg:mx-4 max-lg:mx-4">
+        <div class="px-10 pb-6 text-4xl max-sm:text-2xl max-sm:px-4 font-semibold text-gray-800">Les inscription de mes cours : </div>
+        <div class="overflow-x-auto font-[sans-serif] shadow-md max-sm:w-full px-2 max-sm:p-1">
             <table class="min-w-full bg-white border border-gray-300">
                 <thead class="bg-[#386641] whitespace-nowrap">
                     <tr>
@@ -126,8 +126,8 @@ if (!isset($_POST['search_cours']) && !isset($_POST['search_categorie'])) {
                                 <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['email'] ?></td>
                                 <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['titre'] ?></td>
                                 <td class="py-2 sm:py-4 text-xs sm:text-sm text-[#386641]"><?php echo $CRS['date_inscription'] ?></td>
-                                <td class="py-2 sm:py-4 flex space-x-3">
-                                    <form action="" method="post">
+                                <td class="py-2 sm:py-4 flex space-x-3 justify-center">
+                                    <form action="" method="post" class="">
                                         <input type="hidden" name="id_etudiant" value="<?php echo $CRS['id_user'] ?>">
                                         <button name="delete_from_inscription" class="text-red-500 hover:text-red-700" title="Delete" value="<?php echo $CRS['id_cours'] ?>">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-500 hover:fill-red-700" viewBox="0 0 24 24">
