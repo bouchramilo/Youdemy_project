@@ -17,8 +17,8 @@ class InscriptionCours extends DataBase
             $sql_inscrire = "INSERT INTO inscription_cours(id_user, id_cours) VALUES (:id_user, :id_cours)";
             $stmt = $pdo->prepare($sql_inscrire);
             $stmt->execute([
-                ':id_user' => $_SESSION['id_utilisateur'],
-                ':id_cours' => $id_cours
+                ':id_user' => htmlspecialchars($_SESSION['id_utilisateur']),
+                ':id_cours' => htmlspecialchars($id_cours)
             ]);
 
             header("Location: index.php");
@@ -37,8 +37,8 @@ class InscriptionCours extends DataBase
             $sql_check = "SELECT * FROM inscription_cours WHERE id_cours = :id_cours AND id_user = :id_user";
             $stmt_check = $pdo->prepare($sql_check);
             $stmt_check->execute([
-                ':id_user' => $_SESSION['id_utilisateur'],
-                ':id_cours' => $id_cours
+                ':id_user' => htmlspecialchars($_SESSION['id_utilisateur']),
+                ':id_cours' => htmlspecialchars($id_cours)
             ]);
 
             return $stmt_check->rowCount();
@@ -79,7 +79,7 @@ class InscriptionCours extends DataBase
 
             $stmt = $pdo->prepare($sql_MesCours);
             $stmt->execute([
-                ':id_user' => $_SESSION['id_utilisateur']
+                ':id_user' => htmlspecialchars($_SESSION['id_utilisateur'])
             ]);
 
             $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -98,8 +98,8 @@ class InscriptionCours extends DataBase
             $sql_delete = "DELETE FROM inscription_cours WHERE id_cours = :id_cours AND id_user = :id_user";
             $stmt_delete = $pdo->prepare($sql_delete);
             $stmt_delete->execute([
-                ':id_user' => $_SESSION['id_utilisateur'],
-                ':id_cours' => $id_cours
+                ':id_user' => htmlspecialchars($_SESSION['id_utilisateur']),
+                ':id_cours' => htmlspecialchars($id_cours)
             ]);
         } catch (Exception $e) {
             echo "Erreur : Lors de la suppressiom d'un cours from mes cours !!! " . $e->getMessage();
@@ -137,7 +137,7 @@ class InscriptionCours extends DataBase
 
             $stmt = $pdo->prepare($sql_MesCours);
             $stmt->execute([
-                ':id_enseignant' => $_SESSION['id_utilisateur']
+                ':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur'])
             ]);
 
             $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -160,8 +160,8 @@ class InscriptionCours extends DataBase
             $sql_delete = "DELETE FROM inscription_cours WHERE id_cours = :id_cours AND id_user = :id_user";
             $stmt_delete = $pdo->prepare($sql_delete);
             $stmt_delete->execute([
-                ':id_user' => $id_user,
-                ':id_cours' => $id_cours
+                ':id_user' => htmlspecialchars($id_user),
+                ':id_cours' => htmlspecialchars($id_cours)
             ]);
         } catch (Exception $e) {
             echo "Erreur : Lors de la suppressiom d'un cours from mes cours !!! " . $e->getMessage();
@@ -200,8 +200,8 @@ class InscriptionCours extends DataBase
 
             $stmt = $pdo->prepare($sql_MesCours);
             $stmt->execute([
-                ':id_enseignant' => $_SESSION['id_utilisateur'],
-                ':id_cours' => $id_cours
+                ':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur']),
+                ':id_cours' => htmlspecialchars($id_cours)
             ]);
 
             $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -248,8 +248,8 @@ class InscriptionCours extends DataBase
 
             $stmt = $pdo->prepare($sql_MesCours);
             $stmt->execute([
-                ':id_enseignant' => $_SESSION['id_utilisateur'],
-                ':id_categorie' => $id_categorie
+                ':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur']),
+                ':id_categorie' => htmlspecialchars($id_categorie)
             ]);
 
             $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);

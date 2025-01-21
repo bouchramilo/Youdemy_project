@@ -23,7 +23,7 @@ class CoursText extends Cours
             $stmt_add_cours = $pdo->prepare($sql_add_C_T);
 
             $stmt_add_cours->execute([
-                ':id_enseignant' => $_SESSION['id_utilisateur'],
+                ':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur']),
                 ':titre' => htmlspecialchars($titre),
                 ':descri' => htmlspecialchars($description),
                 ':type_contenu' => htmlspecialchars($type),
@@ -38,8 +38,8 @@ class CoursText extends Cours
                 $sql_add_TC = "INSERT INTO cours_tags (id_cours, id_tag) VALUES (:ID_cours, :id_tag)";
                 $stmt = $pdo->prepare($sql_add_TC);
                 $stmt->execute([
-                    ':ID_cours' => $ID_cours,
-                    ':id_tag' => $tag_id
+                    ':ID_cours' => htmlspecialchars($ID_cours),
+                    ':id_tag' => htmlspecialchars($tag_id)
                 ]);
             }
 
@@ -77,7 +77,7 @@ class CoursText extends Cours
 
             $stmt = $pdo->prepare($sql_details);
             $stmt->execute([
-                ':id_cours' => $_SESSION['id_cours']
+                ':id_cours' => htmlspecialchars($_SESSION['id_cours'])
             ]);
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -125,7 +125,7 @@ if (isset($_POST['btn_update_cours'])) {
                 <?php if ($_SESSION['type_cours'] === "Video") : ?>
                     <iframe
                         class="w-full aspect-video rounded-lg"
-                        src="<?php echo $cours_actuel['content']; ?>"
+                        src="<?php echo htmlspecialchars($cours_actuel['content']); ?>"
                         title="Vidéo YouTube"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -143,14 +143,14 @@ if (isset($_POST['btn_update_cours'])) {
             <div class="w-full sm:w-4/12 flex flex-col gap-4 items-center bg-gray-50 p-4 ">
                 <img src="<?php echo $cours_actuel['photo']; ?>" alt="images de cours" class="h-72 w-full object-cover rounded-t-lg sm:rounded-none">
                 <div class="w-full border border-yellow-400 rounded-lg p-4 text-gray-700">
-                    <p class="text-md max-sm:text-sm font-semibold">Auteur : <span class="font-normal"><?php echo $cours_actuel['full_name']; ?></span></p>
-                    <p class="text-md max-sm:text-sm font-semibold">Catégorie : <span class="font-normal"><?php echo $cours_actuel['titre_categorie']; ?></span></p>
-                    <p class="text-md max-sm:text-sm font-semibold">Description : <span class="font-normal"><?php echo $cours_actuel['description']; ?></span></p>
-                    <p class="text-md max-sm:text-sm font-semibold">Date de création : <span class="font-normal"><?php echo $cours_actuel['date_de_creation']; ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Auteur : <span class="font-normal"><?php echo htmlspecialchars($cours_actuel['full_name']); ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Catégorie : <span class="font-normal"><?php echo htmlspecialchars($cours_actuel['titre_categorie']); ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Description : <span class="font-normal"><?php echo htmlspecialchars($cours_actuel['description']); ?></span></p>
+                    <p class="text-md max-sm:text-sm font-semibold">Date de création : <span class="font-normal"><?php echo htmlspecialchars($cours_actuel['date_de_creation']); ?></span></p>
                     <p class="text-md max-sm:text-sm font-semibold">Tags :</p>
                     <ul class="list-disc text-md max-sm:text-sm ml-10 text-gray-600">
                         <?php foreach ($tagsCours as $TC): ?>
-                            <li><?php echo $TC['nom_tag']; ?></li>
+                            <li><?php echo htmlspecialchars($TC['nom_tag']); ?></li>
                         <?php endforeach; ?>
 
                     </ul>
@@ -173,24 +173,24 @@ if (isset($_POST['btn_update_cours'])) {
             <form method="post" action="" class="space-y-4 mt-8">
                 <div>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau Titre de cours</label>
-                    <input type="text" placeholder="Entrez le titre de cours" name="title_cours" value="<?php echo $cours_actuel['titre']; ?>"
+                    <input type="text" placeholder="Entrez le titre de cours" name="title_cours" value="<?php echo htmlspecialchars($cours_actuel['titre']); ?>"
                         class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau Description du cours</label>
                     <textarea placeholder='Entrez la description de cours' name="descri_cours"
-                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" rows="3"><?php echo $cours_actuel['description']; ?></textarea>
+                        class="resize-none px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" rows="3"><?php echo htmlspecialchars($cours_actuel['description']); ?></textarea>
                 </div>
 
                 <div>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau Type de cours</label>
                     <select placeholder="Entrez Type de cours" id="select_type" name="type_cours"
                         class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
-                        <option value="Video" <?php if ($cours_actuel['type_contenu'] === "Video") {
+                        <option value="Video" <?php if (htmlspecialchars($cours_actuel['type_contenu']) === "Video") {
                                                     echo 'selected';
                                                 } ?>>Video</option>
-                        <option value="Texte" <?php if ($cours_actuel['type_contenu'] === "Texte") {
+                        <option value="Texte" <?php if (htmlspecialchars($cours_actuel['type_contenu']) === "Texte") {
                                                     echo 'selected';
                                                 } ?>>Texte</option>
                     </select>
@@ -198,7 +198,7 @@ if (isset($_POST['btn_update_cours'])) {
 
                 <!-- --------------------------------------------------- -->
                 <!-- texte -->
-                <div id="type-text" <?php if ($cours_actuel['type_contenu'] !== "Texte") {
+                <div id="type-text" <?php if (htmlspecialchars($cours_actuel['type_contenu']) !== "Texte") {
                                         echo 'class="hidden"';
                                     } ?>>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau Texte de cours</label>
@@ -209,12 +209,12 @@ if (isset($_POST['btn_update_cours'])) {
                 </div>
 
                 <!-- vidéo -->
-                <div id="type-video" <?php if ($cours_actuel['type_contenu'] !== "Video") {
+                <div id="type-video" <?php if (htmlspecialchars($cours_actuel['type_contenu']) !== "Video") {
                                             echo 'class="hidden"';
                                         } ?>>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau URI vidéo</label>
-                    <input type="url" placeholder="Entrez le URL du Vidéo" name="video_cours" value="<?php if ($cours_actuel['type_contenu'] === "Video") {
-                                                                                                            echo $cours_actuel['content'];
+                    <input type="url" placeholder="Entrez le URL du Vidéo" name="video_cours" value="<?php if (htmlspecialchars($cours_actuel['type_contenu']) === "Video") {
+                                                                                                            echo htmlspecialchars($cours_actuel['content']);
                                                                                                         }  ?>"
                         class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
                 </div>
@@ -225,7 +225,7 @@ if (isset($_POST['btn_update_cours'])) {
                     <select placeholder="Enter le Catégorie de cours" name="categorie_cours"
                         class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg">
                         <?php foreach ($categories as $categoriee): ?>
-                            <option value="<?= $categoriee['id_categorie'] ?>"><?= $categoriee['titre_categorie'] ?></option>
+                            <option value="<?= htmlspecialchars($categoriee['id_categorie']) ?>"><?= htmlspecialchars($categoriee['titre_categorie']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -235,7 +235,7 @@ if (isset($_POST['btn_update_cours'])) {
                     <!-- Select tags -->
                     <select name="tags_cours[]" id="tags_update" multiple>
                         <?php foreach ($tags as $taag): ?>
-                            <option value="<?= $taag['id_tag'] ?>"><?= $taag['nom_tag'] ?></option>
+                            <option value="<?= htmlspecialchars($taag['id_tag']) ?>"><?= htmlspecialchars($taag['nom_tag']) ?></option>
                         <?php endforeach; ?>
 
                     </select>
@@ -244,14 +244,14 @@ if (isset($_POST['btn_update_cours'])) {
 
                 <div>
                     <label class="text-gray-800 text-sm mb-1 block">Nouveau Photo</label>
-                    <input type="url" placeholder="Entrez le URL de la photo de cours" name="photo_cours" value="<?php echo $cours_actuel['photo']; ?>"
+                    <input type="url" placeholder="Entrez le URL de la photo de cours" name="photo_cours" value="<?php echo htmlspecialchars($cours_actuel['photo']); ?>"
                         class="px-4 py-3 bg-gray-100 w-full text-gray-800 text-sm border-none focus:outline-[#386641] focus:bg-transparent rounded-lg" />
                 </div>
 
                 <div class="flex justify-end gap-4 !mt-8">
                     <button type="button"
                         class="closeU px-6 py-3 rounded-lg text-gray-800 text-sm border-none outline-none tracking-wide bg-gray-200 hover:bg-gray-300">Annuler</button>
-                    <button type="submit" name="btn_update_cours" value="<?= $cours_actuel['id_cours'] ?>"
+                    <button type="submit" name="btn_update_cours" value="<?= htmlspecialchars($cours_actuel['id_cours']) ?>"
                         class="px-6 py-3 rounded-lg text-white text-sm border-none outline-none tracking-wide bg-[#386641] hover:bg-[#277752]">Modifier</button>
                 </div>
             </form>

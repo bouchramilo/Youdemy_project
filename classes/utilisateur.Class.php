@@ -7,6 +7,13 @@ require_once "cours.Class.php";
 
 class Utilisateur extends DataBase
 {
+    private $nom;
+    private $prenom;
+    private $email; 
+    private $role;
+    private $photo;
+    private $motDePasse; 
+    private $status;
 
 
     // fonction validateDonnees ***************************************************************************************************************************************************
@@ -81,7 +88,7 @@ class Utilisateur extends DataBase
             if (trim($role) === "Enseignant") {
                 $sql_teacher = "INSERT INTO enseignants (id_user) VALUES (:id_user)";
                 $stmt_teacher = $pdo->prepare($sql_teacher);
-                $stmt_teacher->execute([':id_user' => $id_user]);
+                $stmt_teacher->execute([':id_user' => htmlspecialchars($id_user)]);
             }
         } catch (Exception $e) {
             return "Erreur lors de signup : " . $e->getMessage();
@@ -97,13 +104,14 @@ class Utilisateur extends DataBase
         try {
             $sql_check_status = "SELECT status FROM utilisateurs WHERE id_user = :id_user";
             $stmt_check_status = $pdo->prepare($sql_check_status);
-            $stmt_check_status->execute([':id_user' => $_SESSION['id_utilisateur']]);
+            $stmt_check_status->execute([':id_user' => htmlspecialchars($_SESSION['id_utilisateur'])]);
             $rslt = $stmt_check_status->fetch(PDO::FETCH_ASSOC);
             return $rslt['status'];
         } catch (Exception $e) {
             return "Erreur : Lors la vérification de status de usre !!! " . $e->getMessage();
         }
     }
+
     // fonction isValide ***************************************************************************************************************************************************
     public function isValide($id_user)
     {
@@ -111,14 +119,13 @@ class Utilisateur extends DataBase
         try {
             $sql_check_valid = "SELECT estValide FROM enseignants WHERE id_user = :id_user";
             $stmt_check_valide = $pdo->prepare($sql_check_valid);
-            $stmt_check_valide->execute([':id_user' => $id_user]);
+            $stmt_check_valide->execute([':id_user' => htmlspecialchars($id_user)]);
             $rslt = $stmt_check_valide->fetch(PDO::FETCH_ASSOC);
             return $rslt['estValide'];
         } catch (Exception $e) {
             return "Erreur : Lors la vérification de la validation de compte d'enseignant !!! " . $e->getMessage();
         }
     }
-
 
     // fonction login ***************************************************************************************************************************************************
     public function login($email, $motDePasse)
@@ -192,7 +199,7 @@ class Utilisateur extends DataBase
 
             $sql = "SELECT role FROM utilisateurs WHERE id_user = :id_user";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([":id_user" => $_SESSION['id_utilisateur']]);
+            $stmt->execute([":id_user" => htmlspecialchars($_SESSION['id_utilisateur'])]);
             $role = $stmt->fetch(PDO::FETCH_ASSOC);
             return $role ? $role['role'] : null;
         } catch (Exception $e) {
@@ -209,7 +216,7 @@ class Utilisateur extends DataBase
 
             $sql = "DELETE FROM utilisateurs WHERE id_user = :id_user";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([":id_user" => $id_user]);
+            $stmt->execute([":id_user" => htmlspecialchars($id_user)]);
             header("Location: gererUser.php");
             exit;
         } catch (Exception $e) {
@@ -226,8 +233,8 @@ class Utilisateur extends DataBase
             $sql = "UPDATE utilisateurs SET status = :newStatus WHERE id_user = :id_user";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
-                ':id_user' => $id_user,
-                ':newStatus' => $newStatus
+                ':id_user' => htmlspecialchars($id_user),
+                ':newStatus' => htmlspecialchars($newStatus)
             ]);
             header("Location: gererUser.php");
             exit;
@@ -286,8 +293,8 @@ class Utilisateur extends DataBase
                 $sql_check = "SELECT * FROM cours WHERE id_enseignant = :user AND id_cours = :cours";
                 $stmt_check = $pdo->prepare($sql_check);
                 $stmt_check->execute([
-                    ':user' => $_SESSION['id_utilisateur'],
-                    ':cours' => $id_cours
+                    ':user' => htmlspecialchars($_SESSION['id_utilisateur']),
+                    ':cours' => htmlspecialchars($id_cours)
                 ]);
                 if ($stmt_check->rowCount() > 0) {
                     $_SESSION['type_cours'] = $course->getType($id_cours);

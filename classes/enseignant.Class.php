@@ -17,7 +17,7 @@ class Enseignant extends Utilisateur
                 WHERE c.id_enseignant = :id_enseignant
                 GROUP BY c.id_cours, c.titre";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([':id_enseignant' => $_SESSION['id_utilisateur']]);
+        $stmt->execute([':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur'])]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -30,7 +30,7 @@ class Enseignant extends Utilisateur
         try {
             $sql = "SELECT COUNT(*) AS nbrMerCours FROM cours WHERE id_enseignant = ?";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$_SESSION['id_utilisateur']]);
+            $stmt->execute([htmlspecialchars($_SESSION['id_utilisateur'])]);
             $nbrMerCours = $stmt->fetch(PDO::FETCH_ASSOC);
             return $nbrMerCours['nbrMerCours'];
         } catch (Exception $e) {
@@ -48,7 +48,7 @@ class Enseignant extends Utilisateur
                     INNER JOIN cours c ON ic.id_cours = c.id_cours
                     WHERE c.id_enseignant = ?";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$_SESSION['id_utilisateur']]);
+            $stmt->execute([htmlspecialchars($_SESSION['id_utilisateur'])]);
             $nbrMerCours = $stmt->fetch(PDO::FETCH_ASSOC);
             return $nbrMerCours['total_students'];
         } catch (Exception $e) {

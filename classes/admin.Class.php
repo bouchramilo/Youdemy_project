@@ -32,14 +32,14 @@ class Admin extends Utilisateur
         try {
             $sql_check_valid = "SELECT estValide FROM enseignants WHERE id_user = :id_user";
             $stmt_check_valide = $pdo->prepare($sql_check_valid);
-            $stmt_check_valide->execute([':id_user' => $id_user]);
+            $stmt_check_valide->execute([':id_user' => htmlspecialchars($id_user)]);
             $rslt = $stmt_check_valide->fetch(PDO::FETCH_ASSOC);
 
             $isValide = $rslt['estValide'] ? 0 : 1;
 
             $sql_valide = "UPDATE enseignants SET estValide = :isValide WHERE id_user = :id_user ";
             $stmt_valide = $pdo->prepare($sql_valide);
-            $stmt_valide->execute([':id_user' => $id_user, ':isValide' => $isValide]);
+            $stmt_valide->execute([':id_user' => htmlspecialchars($id_user), ':isValide' => htmlspecialchars($isValide)]);
 
             header("Location: gererUser.php");
 

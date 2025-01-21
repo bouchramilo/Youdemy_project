@@ -54,7 +54,13 @@ class Cours extends DataBase
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([htmlspecialchars($titre), htmlspecialchars($description), htmlspecialchars($contenu_cours), htmlspecialchars($categorie), htmlspecialchars($photo), htmlspecialchars($id_cours)]);
+                    $stmt_update->execute([
+                                    htmlspecialchars($titre), 
+                                    htmlspecialchars($description), 
+                                    htmlspecialchars($contenu_cours), 
+                                    htmlspecialchars($categorie), 
+                                    htmlspecialchars($photo), 
+                                    htmlspecialchars($id_cours)]);
                 } elseif ($type === "Video") {
                     $sql_update = "UPDATE cours SET 
                                 titre = ?), 
@@ -64,7 +70,14 @@ class Cours extends DataBase
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([htmlspecialchars($titre), $description, $contenu_cours, $categorie, $photo, $id_cours]);
+                    $stmt_update->execute([
+                                    htmlspecialchars($titre), 
+                                    htmlspecialchars($description), 
+                                    htmlspecialchars($contenu_cours), 
+                                    htmlspecialchars($categorie), 
+                                    htmlspecialchars($photo), 
+                                    htmlspecialchars($id_cours)
+                            ]);
                 }
             } else {
                 if ($type === "Texte") {
@@ -78,7 +91,15 @@ class Cours extends DataBase
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([$titre, $description, $type, $contenu_cours, $categorie, $photo, $id_cours]);
+                    $stmt_update->execute([
+                                        htmlspecialchars($titre), 
+                                        htmlspecialchars($description), 
+                                        htmlspecialchars($type), 
+                                        htmlspecialchars($contenu_cours), 
+                                        htmlspecialchars($categorie), 
+                                        htmlspecialchars($photo), 
+                                        htmlspecialchars($id_cours)
+                                ]);
                     $_SESSION['type_cours'] = "Texte";
                 } elseif ($type === "Video") {
                     $sql_update = "UPDATE cours SET 
@@ -91,26 +112,33 @@ class Cours extends DataBase
                                 photo = ? 
                                 WHERE id_cours = ?";
                     $stmt_update = $pdo->prepare($sql_update);
-                    $stmt_update->execute([$titre, $description, $type, $contenu_cours, $categorie, $photo, $id_cours]);
+                    $stmt_update->execute([
+                                    htmlspecialchars($titre), 
+                                    htmlspecialchars($description), 
+                                    htmlspecialchars($type), 
+                                    htmlspecialchars($contenu_cours), 
+                                    htmlspecialchars($categorie), 
+                                    htmlspecialchars($photo), 
+                                    htmlspecialchars($id_cours)
+                ]);
                     $_SESSION['type_cours'] = "Video";
                 }
             }
 
             $sql_delete_tags = "DELETE FROM cours_tags WHERE id_cours = ?";
             $stmt_delete_tags = $pdo->prepare($sql_delete_tags);
-            $stmt_delete_tags->execute([$id_cours]);
+            $stmt_delete_tags->execute([htmlspecialchars($id_cours)]);
 
             if (!empty($tags)) {
                 $sql_insert_tags = "INSERT INTO cours_tags (id_cours, id_tag) VALUES (?, ?)";
                 $stmt_insert_tags = $pdo->prepare($sql_insert_tags);
                 foreach ($tags as $tag) {
-                    $stmt_insert_tags->execute([$id_cours, $tag]);
+                    $stmt_insert_tags->execute([htmlspecialchars($id_cours), htmlspecialchars($tag)]);
                 }
             }
 
             $pdo->commit();
             header("Location: E_details_cours.php");
-            return "Le cours a été modifié avec succès.";
         } catch (Exception $e) {
             $pdo->rollBack();
             return "Erreur lors de la modification du cours : " . $e->getMessage();
@@ -124,7 +152,7 @@ class Cours extends DataBase
         try {
             $sql_check_type = "SELECT type_contenu FROM cours WHERE id_cours = :id_cours";
             $stmt_type = $pdo->prepare($sql_check_type);
-            $stmt_type->execute([':id_cours' => $id_cours]);
+            $stmt_type->execute([':id_cours' => htmlspecialchars($id_cours)]);
             $type = $stmt_type->fetch(PDO::FETCH_ASSOC);
             return $type ? $type['type_contenu'] : null;
         } catch (Exception $e) {
@@ -145,7 +173,7 @@ class Cours extends DataBase
                 ";
 
             $stmt_All = $pdo->prepare($sql_all_C);
-            $stmt_All->execute([':id_user' => $_SESSION['id_utilisateur']]);
+            $stmt_All->execute([':id_user' => htmlspecialchars($_SESSION['id_utilisateur'])]);
 
             $mesCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
             return $mesCours;
@@ -163,7 +191,7 @@ class Cours extends DataBase
             $sql_dlt_cours = "DELETE FROM cours WHERE id_cours = :id_cours";
 
             $stmt_dlt = $pdo->prepare($sql_dlt_cours);
-            $stmt_dlt->execute([':id_cours' => $id_course]);
+            $stmt_dlt->execute([':id_cours' => htmlspecialchars($id_course)]);
         } catch (Exception $e) {
             return "Erreur : Lors de la suppression d'un cours !!! " . $e->getMessage();
         }
@@ -192,8 +220,8 @@ class Cours extends DataBase
                     LIMIT :startPoint, :limite";
 
             $stmt_All = $pdo->prepare($sql_all_C);
-            $stmt_All->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
-            $stmt_All->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt_All->bindValue(':startPoint', htmlspecialchars($startPoint), PDO::PARAM_INT);
+            $stmt_All->bindValue(':limite', htmlspecialchars($limit), PDO::PARAM_INT);
             $stmt_All->execute();
 
             $AllCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
@@ -251,9 +279,9 @@ class Cours extends DataBase
                     ";
 
             $stmt_All = $pdo->prepare($sql_all_C);
-            $stmt_All->bindValue(':id_categorie', $categorie, PDO::PARAM_INT);
-            $stmt_All->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
-            $stmt_All->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt_All->bindValue(':id_categorie', htmlspecialchars($categorie));
+            $stmt_All->bindValue(':startPoint', htmlspecialchars($startPoint), PDO::PARAM_INT);
+            $stmt_All->bindValue(':limite', htmlspecialchars($limit), PDO::PARAM_INT);
             $stmt_All->execute();
 
             $AllCours = $stmt_All->fetchAll(PDO::FETCH_ASSOC);
@@ -291,9 +319,9 @@ class Cours extends DataBase
             ";
 
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':id_tag', $id_tag, PDO::PARAM_INT);
-            $stmt->bindValue(':startPoint', $startPoint, PDO::PARAM_INT);
-            $stmt->bindValue(':limite', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':id_tag', htmlspecialchars($id_tag));
+            $stmt->bindValue(':startPoint', htmlspecialchars($startPoint), PDO::PARAM_INT);
+            $stmt->bindValue(':limite', htmlspecialchars($limit), PDO::PARAM_INT);
             $stmt->execute();
 
             $cours = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -328,7 +356,7 @@ class Cours extends DataBase
 
             $stmt = $pdo->prepare($sql);
 
-            $stmt->bindValue(':searchTitle', '%' . $searchTitle . '%', PDO::PARAM_STR);
+            $stmt->bindValue(':searchTitle', '%' . htmlspecialchars($searchTitle) . '%', PDO::PARAM_STR);
 
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

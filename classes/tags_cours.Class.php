@@ -18,7 +18,7 @@ class TagsCours extends DataBase {
                         WHERE ct.id_cours = :id_cours;
                     ";
             $stmt = $pdo->prepare($sql_tagsC);
-            $stmt->execute([':id_cours' => $id_cours]);
+            $stmt->execute([':id_cours' => htmlspecialchars($id_cours)]);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result ;

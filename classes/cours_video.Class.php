@@ -23,7 +23,7 @@ class CoursVideo extends Cours
             $sql_add_C_V = "INSERT INTO cours (id_enseignant, titre, description, type_contenu, contenu_video, id_categorie, photo) VALUES (:id_enseignant, :titre, :descri, :type_contenu, :contenu_video, :id_categorie, :photo)";
             $stmt_add_cours = $pdo->prepare($sql_add_C_V);
             $stmt_add_cours->execute([
-                ':id_enseignant' => $_SESSION['id_utilisateur'],
+                ':id_enseignant' => htmlspecialchars($_SESSION['id_utilisateur']),
                 ':titre' => htmlspecialchars($titre),
                 ':descri' => htmlspecialchars($description),
                 ':type_contenu' => htmlspecialchars($type),
@@ -40,7 +40,7 @@ class CoursVideo extends Cours
 
                 foreach ($tags as $tag_id) {
                     $stmt->execute([
-                        ':ID_cours' => $ID_cours,
+                        ':ID_cours' => htmlspecialchars($ID_cours),
                         ':id_tag' => htmlspecialchars($tag_id)
                     ]);
                 }
@@ -82,7 +82,7 @@ class CoursVideo extends Cours
 
             $stmt = $pdo->prepare($sql_details);
             $stmt->execute([
-                ':id_cours' => $_SESSION['id_cours']
+                ':id_cours' => htmlspecialchars($_SESSION['id_cours'])
             ]);
 
             $result = $stmt->fetch(PDO::FETCH_ASSOC);

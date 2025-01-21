@@ -10,7 +10,7 @@ class Tag extends DataBase
     public function addTag($nom_tag)
     {
         try {
-            if (!preg_match('/^[\p{L},\s]+$/u', $nom_tag)) {
+            if (!preg_match('/^[\p{L}0-9\s%&,.:;\'()!?-]+$/u', $nom_tag)) {
                 return "Le tag doit contenir uniquement des lettres et des virgules pour séparer les tags.";
             }
 
@@ -23,7 +23,7 @@ class Tag extends DataBase
                 if (!empty($tag)) {
                     $sql_add = "INSERT INTO tags (nom_tag) VALUES (:nom_tag)";
                     $stmt_add = $pdo->prepare($sql_add);
-                    $stmt_add->execute([':nom_tag' => $tag]);
+                    $stmt_add->execute([':nom_tag' => htmlspecialchars($tag)]);
                 }
             }
             header("Location: tags_categories.php");
@@ -39,7 +39,7 @@ class Tag extends DataBase
             $pdo = $this->connect();
             $sql_delete = "DELETE FROM tags WHERE id_tag = :id_tag";
             $stmt_delete = $pdo->prepare($sql_delete);
-            $stmt_delete->execute([':id_tag' => $id_tag]);
+            $stmt_delete->execute([':id_tag' => htmlspecialchars($id_tag)]);
             header("Location: tags_categories.php");
             return;
         } catch (Exception $e) {
@@ -55,8 +55,8 @@ class Tag extends DataBase
             $sql_update = "UPDATE tags SET nom_tag = :nameTag WHERE id_tag = :id_tag";
             $stmt_update = $pdo->prepare($sql_update);
             $stmt_update->execute([
-                ':nameTag' => $nameTag,
-                ':id_tag' => $id_tag
+                ':nameTag' => htmlspecialchars($nameTag),
+                ':id_tag' => htmlspecialchars($id_tag)
             ]);
             header("Location: tags_categories.php");
             return;
